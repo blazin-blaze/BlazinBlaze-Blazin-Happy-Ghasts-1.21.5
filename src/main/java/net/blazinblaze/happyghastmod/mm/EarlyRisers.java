@@ -1,10 +1,8 @@
 package net.blazinblaze.happyghastmod.mm;
 
 import com.chocohead.mm.api.ClassTinkerers;
-import net.blazinblaze.happyghastmod.entity.model.HappyGhastLayerTypes;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.MappingResolver;
-import net.minecraft.client.render.entity.equipment.EquipmentModel;
 
 public class EarlyRisers implements Runnable {
     @Override

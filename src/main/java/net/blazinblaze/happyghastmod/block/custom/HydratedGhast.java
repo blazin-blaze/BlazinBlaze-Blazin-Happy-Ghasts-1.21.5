@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import net.blazinblaze.happyghastmod.block.HappyGhastBlocks;
 import net.blazinblaze.happyghastmod.entity.HappyGhastEntities;
 import net.blazinblaze.happyghastmod.entity.custom.HappyGhast;
+import net.blazinblaze.happyghastmod.sound.HappyGhastSounds;
 import net.minecraft.block.*;
 import net.minecraft.entity.SpawnReason;
 import net.minecraft.entity.ai.pathing.NavigationType;
@@ -71,7 +72,7 @@ public class HydratedGhast extends FacingBlock implements Waterloggable {
             if (random.nextFloat() < 0.1F) {
                 world.setBlockState(pos, Blocks.AIR.getDefaultState());
                 world.spawnParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 1, 0, 0.2, 0, 0.5);
-                HappyGhastEntities.GHASTLING.spawn(world, pos, SpawnReason.SPAWNER);
+                HappyGhastEntities.GHASTLING.spawn(world, pos, SpawnReason.SPAWNER).playSound(HappyGhastSounds.GHASTLING_SPAWN);
             }
         }else {
             float f = 0.1F;

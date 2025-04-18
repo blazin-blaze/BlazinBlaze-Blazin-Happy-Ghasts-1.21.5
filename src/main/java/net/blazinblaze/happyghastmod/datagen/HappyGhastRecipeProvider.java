@@ -40,6 +40,150 @@ public class HappyGhastRecipeProvider extends FabricRecipeProvider {
                         .group("dried_ghast") // Put it in a group called "multi_bench" - groups are shown in one slot in the recipe book
                         .criterion(hasItem(HappyGhastBlocks.DRIED_GHAST.asItem()), conditionsFromItem(HappyGhastBlocks.DRIED_GHAST.asItem()))
                         .offerTo(exporter);
+                createShaped(RecipeCategory.MISC, HappyGhastItems.BLUE_HARNESS, 1)
+                        .pattern("lll")
+                        .pattern("gwg")
+                        .input('l', Ingredient.ofItem(Items.LEATHER)) // 'l' means "any log"
+                        .input('w', Ingredient.ofItem(Blocks.BLUE_WOOL.asItem()))
+                        .input('g', Ingredient.ofItem(Blocks.GLASS.asItem()))
+                        .group("blue_harness") // Put it in a group called "multi_bench" - groups are shown in one slot in the recipe book
+                        .criterion(hasItem(HappyGhastItems.BLUE_HARNESS), conditionsFromItem(HappyGhastItems.BLUE_HARNESS))
+                        .offerTo(exporter);
+                createShaped(RecipeCategory.MISC, HappyGhastItems.WHITE_HARNESS, 1)
+                        .pattern("lll")
+                        .pattern("gwg")
+                        .input('l', Ingredient.ofItem(Items.LEATHER)) // 'l' means "any log"
+                        .input('w', Ingredient.ofItem(Blocks.WHITE_WOOL.asItem()))
+                        .input('g', Ingredient.ofItem(Blocks.GLASS.asItem()))
+                        .group("white_harness") // Put it in a group called "multi_bench" - groups are shown in one slot in the recipe book
+                        .criterion(hasItem(HappyGhastItems.WHITE_HARNESS), conditionsFromItem(HappyGhastItems.WHITE_HARNESS))
+                        .offerTo(exporter);
+                createShaped(RecipeCategory.MISC, HappyGhastItems.LIGHT_GRAY_HARNESS, 1)
+                        .pattern("lll")
+                        .pattern("gwg")
+                        .input('l', Ingredient.ofItem(Items.LEATHER)) // 'l' means "any log"
+                        .input('w', Ingredient.ofItem(Blocks.LIGHT_GRAY_WOOL.asItem()))
+                        .input('g', Ingredient.ofItem(Blocks.GLASS.asItem()))
+                        .group("light_gray_harness") // Put it in a group called "multi_bench" - groups are shown in one slot in the recipe book
+                        .criterion(hasItem(HappyGhastItems.LIGHT_GRAY_HARNESS), conditionsFromItem(HappyGhastItems.LIGHT_GRAY_HARNESS))
+                        .offerTo(exporter);
+                createShaped(RecipeCategory.MISC, HappyGhastItems.GRAY_HARNESS, 1)
+                        .pattern("lll")
+                        .pattern("gwg")
+                        .input('l', Ingredient.ofItem(Items.LEATHER)) // 'l' means "any log"
+                        .input('w', Ingredient.ofItem(Blocks.GRAY_WOOL.asItem()))
+                        .input('g', Ingredient.ofItem(Blocks.GLASS.asItem()))
+                        .group("gray_harness") // Put it in a group called "multi_bench" - groups are shown in one slot in the recipe book
+                        .criterion(hasItem(HappyGhastItems.GRAY_HARNESS), conditionsFromItem(HappyGhastItems.GRAY_HARNESS))
+                        .offerTo(exporter);
+                createShaped(RecipeCategory.MISC, HappyGhastItems.BLACK_HARNESS, 1)
+                        .pattern("lll")
+                        .pattern("gwg")
+                        .input('l', Ingredient.ofItem(Items.LEATHER)) // 'l' means "any log"
+                        .input('w', Ingredient.ofItem(Blocks.BLACK_WOOL.asItem()))
+                        .input('g', Ingredient.ofItem(Blocks.GLASS.asItem()))
+                        .group("black_harness") // Put it in a group called "multi_bench" - groups are shown in one slot in the recipe book
+                        .criterion(hasItem(HappyGhastItems.BLACK_HARNESS), conditionsFromItem(HappyGhastItems.BLACK_HARNESS))
+                        .offerTo(exporter);
+                createShaped(RecipeCategory.MISC, HappyGhastItems.BROWN_HARNESS, 1)
+                        .pattern("lll")
+                        .pattern("gwg")
+                        .input('l', Ingredient.ofItem(Items.LEATHER)) // 'l' means "any log"
+                        .input('w', Ingredient.ofItem(Blocks.BROWN_WOOL.asItem()))
+                        .input('g', Ingredient.ofItem(Blocks.GLASS.asItem()))
+                        .group("brown_harness") // Put it in a group called "multi_bench" - groups are shown in one slot in the recipe book
+                        .criterion(hasItem(HappyGhastItems.BROWN_HARNESS), conditionsFromItem(HappyGhastItems.BROWN_HARNESS))
+                        .offerTo(exporter);
+                createShaped(RecipeCategory.MISC, HappyGhastItems.RED_HARNESS, 1)
+                        .pattern("lll")
+                        .pattern("gwg")
+                        .input('l', Ingredient.ofItem(Items.LEATHER)) // 'l' means "any log"
+                        .input('w', Ingredient.ofItem(Blocks.RED_WOOL.asItem()))
+                        .input('g', Ingredient.ofItem(Blocks.GLASS.asItem()))
+                        .group("black_harness") // Put it in a group called "multi_bench" - groups are shown in one slot in the recipe book
+                        .criterion(hasItem(HappyGhastItems.RED_HARNESS), conditionsFromItem(HappyGhastItems.RED_HARNESS))
+                        .offerTo(exporter);
+                createShaped(RecipeCategory.MISC, HappyGhastItems.ORANGE_HARNESS, 1)
+                        .pattern("lll")
+                        .pattern("gwg")
+                        .input('l', Ingredient.ofItem(Items.LEATHER)) // 'l' means "any log"
+                        .input('w', Ingredient.ofItem(Blocks.ORANGE_WOOL.asItem()))
+                        .input('g', Ingredient.ofItem(Blocks.GLASS.asItem()))
+                        .group("orange_harness") // Put it in a group called "multi_bench" - groups are shown in one slot in the recipe book
+                        .criterion(hasItem(HappyGhastItems.ORANGE_HARNESS), conditionsFromItem(HappyGhastItems.ORANGE_HARNESS))
+                        .offerTo(exporter);
+                createShaped(RecipeCategory.MISC, HappyGhastItems.YELLOW_HARNESS, 1)
+                        .pattern("lll")
+                        .pattern("gwg")
+                        .input('l', Ingredient.ofItem(Items.LEATHER)) // 'l' means "any log"
+                        .input('w', Ingredient.ofItem(Blocks.YELLOW_WOOL.asItem()))
+                        .input('g', Ingredient.ofItem(Blocks.GLASS.asItem()))
+                        .group("yellow_harness") // Put it in a group called "multi_bench" - groups are shown in one slot in the recipe book
+                        .criterion(hasItem(HappyGhastItems.YELLOW_HARNESS), conditionsFromItem(HappyGhastItems.YELLOW_HARNESS))
+                        .offerTo(exporter);
+                createShaped(RecipeCategory.MISC, HappyGhastItems.LIME_HARNESS, 1)
+                        .pattern("lll")
+                        .pattern("gwg")
+                        .input('l', Ingredient.ofItem(Items.LEATHER)) // 'l' means "any log"
+                        .input('w', Ingredient.ofItem(Blocks.LIME_WOOL.asItem()))
+                        .input('g', Ingredient.ofItem(Blocks.GLASS.asItem()))
+                        .group("lime_harness") // Put it in a group called "multi_bench" - groups are shown in one slot in the recipe book
+                        .criterion(hasItem(HappyGhastItems.LIME_HARNESS), conditionsFromItem(HappyGhastItems.LIME_HARNESS))
+                        .offerTo(exporter);
+                createShaped(RecipeCategory.MISC, HappyGhastItems.GREEN_HARNESS, 1)
+                        .pattern("lll")
+                        .pattern("gwg")
+                        .input('l', Ingredient.ofItem(Items.LEATHER)) // 'l' means "any log"
+                        .input('w', Ingredient.ofItem(Blocks.GREEN_WOOL.asItem()))
+                        .input('g', Ingredient.ofItem(Blocks.GLASS.asItem()))
+                        .group("green_harness") // Put it in a group called "multi_bench" - groups are shown in one slot in the recipe book
+                        .criterion(hasItem(HappyGhastItems.GREEN_HARNESS), conditionsFromItem(HappyGhastItems.GREEN_HARNESS))
+                        .offerTo(exporter);
+                createShaped(RecipeCategory.MISC, HappyGhastItems.CYAN_HARNESS, 1)
+                        .pattern("lll")
+                        .pattern("gwg")
+                        .input('l', Ingredient.ofItem(Items.LEATHER)) // 'l' means "any log"
+                        .input('w', Ingredient.ofItem(Blocks.CYAN_WOOL.asItem()))
+                        .input('g', Ingredient.ofItem(Blocks.GLASS.asItem()))
+                        .group("cyan_harness") // Put it in a group called "multi_bench" - groups are shown in one slot in the recipe book
+                        .criterion(hasItem(HappyGhastItems.CYAN_HARNESS), conditionsFromItem(HappyGhastItems.CYAN_HARNESS))
+                        .offerTo(exporter);
+                createShaped(RecipeCategory.MISC, HappyGhastItems.LIGHT_BLUE_HARNESS, 1)
+                        .pattern("lll")
+                        .pattern("gwg")
+                        .input('l', Ingredient.ofItem(Items.LEATHER)) // 'l' means "any log"
+                        .input('w', Ingredient.ofItem(Blocks.LIGHT_BLUE_WOOL.asItem()))
+                        .input('g', Ingredient.ofItem(Blocks.GLASS.asItem()))
+                        .group("light_blue_harness") // Put it in a group called "multi_bench" - groups are shown in one slot in the recipe book
+                        .criterion(hasItem(HappyGhastItems.LIGHT_BLUE_HARNESS), conditionsFromItem(HappyGhastItems.LIGHT_BLUE_HARNESS))
+                        .offerTo(exporter);
+                createShaped(RecipeCategory.MISC, HappyGhastItems.PURPLE_HARNESS, 1)
+                        .pattern("lll")
+                        .pattern("gwg")
+                        .input('l', Ingredient.ofItem(Items.LEATHER)) // 'l' means "any log"
+                        .input('w', Ingredient.ofItem(Blocks.PURPLE_WOOL.asItem()))
+                        .input('g', Ingredient.ofItem(Blocks.GLASS.asItem()))
+                        .group("purple_harness") // Put it in a group called "multi_bench" - groups are shown in one slot in the recipe book
+                        .criterion(hasItem(HappyGhastItems.PURPLE_HARNESS), conditionsFromItem(HappyGhastItems.PURPLE_HARNESS))
+                        .offerTo(exporter);
+                createShaped(RecipeCategory.MISC, HappyGhastItems.MAGENTA_HARNESS, 1)
+                        .pattern("lll")
+                        .pattern("gwg")
+                        .input('l', Ingredient.ofItem(Items.LEATHER)) // 'l' means "any log"
+                        .input('w', Ingredient.ofItem(Blocks.MAGENTA_WOOL.asItem()))
+                        .input('g', Ingredient.ofItem(Blocks.GLASS.asItem()))
+                        .group("magenta_harness") // Put it in a group called "multi_bench" - groups are shown in one slot in the recipe book
+                        .criterion(hasItem(HappyGhastItems.MAGENTA_HARNESS), conditionsFromItem(HappyGhastItems.MAGENTA_HARNESS))
+                        .offerTo(exporter);
+                createShaped(RecipeCategory.MISC, HappyGhastItems.PINK_HARNESS, 1)
+                        .pattern("lll")
+                        .pattern("gwg")
+                        .input('l', Ingredient.ofItem(Items.LEATHER)) // 'l' means "any log"
+                        .input('w', Ingredient.ofItem(Blocks.PINK_WOOL.asItem()))
+                        .input('g', Ingredient.ofItem(Blocks.GLASS.asItem()))
+                        .group("pink_harness") // Put it in a group called "multi_bench" - groups are shown in one slot in the recipe book
+                        .criterion(hasItem(HappyGhastItems.PINK_HARNESS), conditionsFromItem(HappyGhastItems.PINK_HARNESS))
+                        .offerTo(exporter);
             }
         };
     }

@@ -4,6 +4,7 @@ import net.blazinblaze.happyghastmod.datagen.HappyGhastAdvancementProvider;
 //import net.blazinblaze.happyghastmod.datagen.HappyGhastEquipmentAssetProvider;
 import net.blazinblaze.happyghastmod.datagen.HappyGhastLootTableProvider;
 import net.blazinblaze.happyghastmod.datagen.HappyGhastRecipeProvider;
+import net.blazinblaze.happyghastmod.datagen.HappyGhastTagProvider;
 import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator;
 import net.minecraft.registry.RegistryBuilder;
@@ -16,6 +17,7 @@ public class HappyGhastModDataGenerator implements DataGeneratorEntrypoint {
 		pack.addProvider(HappyGhastAdvancementProvider::new);
 		pack.addProvider(HappyGhastLootTableProvider::new);
 		pack.addProvider(HappyGhastRecipeProvider::new);
+		pack.addProvider(HappyGhastTagProvider::new);
 	}
 
 	@Override

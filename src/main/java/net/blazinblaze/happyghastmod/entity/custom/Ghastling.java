@@ -2,9 +2,12 @@ package net.blazinblaze.happyghastmod.entity.custom;
 
 import net.blazinblaze.happyghastmod.achievement.HappyGhastCriteria;
 import net.blazinblaze.happyghastmod.entity.HappyGhastEntities;
+import net.blazinblaze.happyghastmod.entity.custom.goals.*;
+import net.blazinblaze.happyghastmod.entity.custom.goals.ghastling.*;
+import net.blazinblaze.happyghastmod.sound.HappyGhastSounds;
+import net.blazinblaze.happyghastmod.tag.HappyGhastTags;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.control.MoveControl;
-import net.minecraft.entity.ai.goal.ActiveTargetGoal;
 import net.minecraft.entity.ai.goal.Goal;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -28,28 +31,29 @@ import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.tag.DamageTypeTags;
-import net.minecraft.registry.tag.GameEventTags;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.Hand;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.Box;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
+import net.minecraft.util.math.*;
 import net.minecraft.util.math.random.Random;
+import net.minecraft.world.Heightmap;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldAccess;
+import net.minecraft.world.biome.Biome;
 import net.minecraft.world.dimension.DimensionTypes;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.EnumSet;
 import java.util.Objects;
+import java.util.Optional;
 
-public class Ghastling extends FlyingEntity implements Leashable {
+public class Ghastling extends FlyingEntity implements Leashable, Ownable {
     private static final TrackedData<Integer> GHASTLING_GROWTH;
     private static final TrackedData<Boolean> IN_NETHER;
+    private Optional<GlobalPos> homePosition = Optional.empty();
 
     public Ghastling(EntityType<? extends FlyingEntity> entityType, World world) {
         super(entityType, world);
@@ -58,10 +62,16 @@ public class Ghastling extends FlyingEntity implements Leashable {
         this.rewardAchievement();
     }
 
+    public void updateHomePosition() {
+        this.homePosition = Optional.of(new GlobalPos(this.getWorld().getRegistryKey(), this.getBlockPos()));
+    }
+
     protected void initGoals() {
-        this.goalSelector.add(5, new Ghastling.FlyRandomlyGoal(this));
-        this.goalSelector.add(7, new Ghastling.LookAtTargetGoal(this));
-        this.targetSelector.add(1, new ActiveTargetGoal(this, PlayerEntity.class, 10, true, false, (entity, world) -> Math.abs(entity.getY() - this.getY()) <= (double)4.0F));
+        this.goalSelector.add(1, new GhastlingTemptGoal(this, 1.25D, itemStack -> itemStack.isOf(Items.SNOWBALL), true, ghastling -> true));
+        this.goalSelector.add(2, new GhastlingGoHomeGoal(this));
+        this.goalSelector.add(3, new GhastlingFollowMobGoal(this, 1D, entity -> entity.getType().isIn(HappyGhastTags.GHASTLING_FOLLOWS)));
+        this.goalSelector.add(4, new GhastlingFloatAroundGoal(this));
+        this.goalSelector.add(5, new GhastlingLookGoal(this));
     }
 
     @Override
@@ -78,7 +88,7 @@ public class Ghastling extends FlyingEntity implements Leashable {
     }
 
     public static DefaultAttributeContainer.Builder createGhastAttributes() {
-        return MobEntity.createMobAttributes().add(EntityAttributes.MAX_HEALTH, (double)10.0F).add(EntityAttributes.FOLLOW_RANGE, (double)100.0F).add(EntityAttributes.SCALE, .25F);
+        return MobEntity.createMobAttributes().add(EntityAttributes.MAX_HEALTH, (double)12.0F).add(EntityAttributes.FOLLOW_RANGE, (double)100.0F).add(EntityAttributes.SCALE, .25F).add(EntityAttributes.TEMPT_RANGE, 25.0F);
     }
 
     public SoundCategory getSoundCategory() {
@@ -86,15 +96,15 @@ public class Ghastling extends FlyingEntity implements Leashable {
     }
 
     protected SoundEvent getAmbientSound() {
-        return SoundEvents.ENTITY_GHAST_AMBIENT;
+        return HappyGhastSounds.GHASTLING_AMBIENT;
     }
 
     protected SoundEvent getHurtSound(DamageSource source) {
-        return SoundEvents.ENTITY_GHAST_HURT;
+        return HappyGhastSounds.GHASTLING_HURT;
     }
 
     protected SoundEvent getDeathSound() {
-        return SoundEvents.ENTITY_GHAST_DEATH;
+        return HappyGhastSounds.GHASTLING_DEATH;
     }
 
     protected float getSoundVolume() {
@@ -115,6 +125,8 @@ public class Ghastling extends FlyingEntity implements Leashable {
         Item item = itemStack.getItem();
         if(player.getWorld() instanceof ServerWorld serverWorld) {
             if(item == Items.SNOWBALL) {
+                this.heal(1.0F);
+                this.playSound(SoundEvents.ENTITY_SLIME_SQUISH, this.getSoundVolume(), 1.0f);
                 if(getGhastlingGrowth() >= 24000) {
                     this.convertTo(HappyGhastEntities.HAPPY_GHAST, EntityConversionContext.create(this, false, false), (happyGhast) -> happyGhast.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 20*5, 1, true, true)));
                 }else {
@@ -126,6 +138,7 @@ public class Ghastling extends FlyingEntity implements Leashable {
                         this.convertTo(HappyGhastEntities.HAPPY_GHAST, EntityConversionContext.create(this, false, false), (happyGhast) -> happyGhast.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 20*5, 1, true, true)));
                     }
                 }
+                player.getStackInHand(hand).decrementUnlessCreative(1, player);
                 return ActionResult.SUCCESS;
             }
             return ActionResult.PASS;
@@ -138,6 +151,7 @@ public class Ghastling extends FlyingEntity implements Leashable {
     public void tick() {
         super.tick();
         if(this.getWorld() instanceof ServerWorld world) {
+            this.heal(0.003F);
             DynamicRegistryManager registryManager = world.getRegistryManager();
             for (int i = 0; i < world.getPlayers().size(); i++) {
                 if(Objects.equals(world.getDimensionEntry(), registryManager.getOrThrow(RegistryKeys.DIMENSION_TYPE).getEntry(DimensionTypes.THE_NETHER.getValue()).get())) {
@@ -170,14 +184,51 @@ public class Ghastling extends FlyingEntity implements Leashable {
 
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
+        this.homePosition.ifPresent(globalPos -> nbt.put("HomePosition", GlobalPos.CODEC, globalPos));
         nbt.putInt("ghastling_growth", this.getGhastlingGrowth());
         nbt.putBoolean("in_nether", this.getInNether());
     }
 
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
+        this.homePosition = nbt.get("HomePosition", GlobalPos.CODEC);
         this.setGhastlingGrowth(nbt.getInt("ghastling_growth").orElse(0));
         this.setInNether(nbt.getBoolean("in_nether").orElse(false));
+    }
+
+    @Override
+    public void tickMovement() {
+        super.tickMovement();
+        if (this.getWorld() instanceof ServerWorld && this.isAlive()) {
+            if (this.deathTime == 0) {
+                if (this.getWorld().getRegistryKey() == World.OVERWORLD) {
+                    if (this.getBoundingBox().contains(this.getX(), 195D, this.getZ()) || this.isRainingOrSnowingAt()) {
+                        if (this.getActiveStatusEffects().get(StatusEffects.REGENERATION) == null) {
+                            this.addStatusEffect(new StatusEffectInstance(StatusEffects.REGENERATION, 100, 0));
+                        }
+                    }
+                }
+            }
+
+            if (this.isSubmergedInWater()) {
+                this.setVelocity(this.getVelocity().add(0D, 0.04D, 0D));
+            }
+        }
+    }
+
+    public boolean isRainingOrSnowingAt() {
+        World world = this.getWorld();
+        BlockPos blockPos = this.getBlockPos();
+        if (!world.isRaining()) {
+            return false;
+        } else if (!world.isSkyVisible(blockPos)) {
+            return false;
+        } else if (world.getTopPosition(Heightmap.Type.MOTION_BLOCKING, blockPos).getY() > blockPos.getY()) {
+            return false;
+        } else {
+            Biome biome = world.getBiome(blockPos).value();
+            return biome.getPrecipitation(blockPos, world.getSeaLevel()) != Biome.Precipitation.NONE;
+        }
     }
 
     @Override
@@ -204,6 +255,51 @@ public class Ghastling extends FlyingEntity implements Leashable {
     @Override
     public boolean isFireImmune() {
         return true;
+    }
+
+    @Override
+    public @Nullable Entity getOwner() {
+        return null;
+    }
+
+    public boolean hasHomePosition() {
+        return this.homePosition.isPresent();
+    }
+
+    public boolean isInHomePositionDimension() {
+        return this.hasHomePosition() && this.getWorld().getRegistryKey() == this.homePosition.get().dimension();
+    }
+
+    public Optional<BlockPos> getHomeBlockPosition() {
+        return this.homePosition.map(GlobalPos::pos);
+    }
+
+    @Override
+    public void travel(Vec3d movementInput) {
+        if (this.isSubmergedInWater()) {
+            this.updateVelocity(0.02F, movementInput);
+            this.move(MovementType.SELF, this.getVelocity());
+            this.setVelocity(this.getVelocity().multiply(0.8F));
+        } else if (this.isInLava()) {
+            this.updateVelocity(0.02F, movementInput);
+            this.move(MovementType.SELF, this.getVelocity());
+            this.setVelocity(this.getVelocity().multiply(0.5));
+        } else {
+            float f = 0.91F;
+            if (this.isOnGround()) {
+                f = this.getWorld().getBlockState(this.getVelocityAffectingPos()).getBlock().getSlipperiness() * 0.91F;
+            }
+
+            float g = 0.16277137F / (f * f * f);
+            f = 0.91F;
+            if (this.isOnGround()) {
+                f = this.getWorld().getBlockState(this.getVelocityAffectingPos()).getBlock().getSlipperiness() * 0.91F;
+            }
+
+            this.updateVelocity(this.isOnGround() ? 0.1F * g : 0.02F, movementInput);
+            this.move(MovementType.SELF, this.getVelocity());
+            this.setVelocity(this.getVelocity().multiply(f));
+        }
     }
 
     static class GhastMoveControl extends MoveControl {
@@ -243,75 +339,6 @@ public class Ghastling extends FlyingEntity implements Leashable {
             }
 
             return true;
-        }
-    }
-
-    static class FlyRandomlyGoal extends Goal {
-        private final Ghastling ghast;
-
-        public FlyRandomlyGoal(Ghastling ghast) {
-            this.ghast = ghast;
-            this.setControls(EnumSet.of(Control.MOVE));
-        }
-
-        public boolean canStart() {
-            MoveControl moveControl = this.ghast.getMoveControl();
-            if (!moveControl.isMoving()) {
-                return true;
-            } else {
-                double d = moveControl.getTargetX() - this.ghast.getX();
-                double e = moveControl.getTargetY() - this.ghast.getY();
-                double f = moveControl.getTargetZ() - this.ghast.getZ();
-                double g = d * d + e * e + f * f;
-                return g < (double)1.0F || g > (double)3600.0F;
-            }
-        }
-
-        public boolean shouldContinue() {
-            return false;
-        }
-
-        public void start() {
-            Random random = this.ghast.getRandom();
-            double d = this.ghast.getX() + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
-            double e = this.ghast.getY() + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
-            double f = this.ghast.getZ() + (double)((random.nextFloat() * 2.0F - 1.0F) * 16.0F);
-            this.ghast.getMoveControl().moveTo(d, e, f, (double)1.0F);
-        }
-    }
-
-    static class LookAtTargetGoal extends Goal {
-        private final Ghastling ghast;
-
-        public LookAtTargetGoal(Ghastling ghast) {
-            this.ghast = ghast;
-            this.setControls(EnumSet.of(Control.LOOK));
-        }
-
-        public boolean canStart() {
-            return true;
-        }
-
-        public boolean shouldRunEveryTick() {
-            return true;
-        }
-
-        public void tick() {
-            if (this.ghast.getTarget() == null) {
-                Vec3d vec3d = this.ghast.getVelocity();
-                this.ghast.setYaw(-((float)MathHelper.atan2(vec3d.x, vec3d.z)) * (180F / (float)Math.PI));
-                this.ghast.bodyYaw = this.ghast.getYaw();
-            } else {
-                LivingEntity livingEntity = this.ghast.getTarget();
-                double d = (double)64.0F;
-                if (livingEntity.squaredDistanceTo(this.ghast) < (double)4096.0F) {
-                    double e = livingEntity.getX() - this.ghast.getX();
-                    double f = livingEntity.getZ() - this.ghast.getZ();
-                    this.ghast.setYaw(-((float)MathHelper.atan2(e, f)) * (180F / (float)Math.PI));
-                    this.ghast.bodyYaw = this.ghast.getYaw();
-                }
-            }
-
         }
     }
 

@@ -1,0 +1,102 @@
+{
+  "entity-happy_ghast-ambient": {
+    "subtitle": "sound.blaze-twitch-mod.entity-happy_ghast-ambient",
+    "sounds": [
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-ambient1",
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-ambient2",
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-ambient3",
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-ambient4",
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-ambient5",
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-ambient6",
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-ambient7",
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-ambient8",
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-ambient9",
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-ambient10",
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-ambient11",
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-ambient12",
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-ambient13",
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-ambient14"
+    ]
+  },
+  "entity-happy_ghast-hurt": {
+    "subtitle": "sound.happy-ghast-mod.entity-happy_ghast-hurt",
+    "sounds": [
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-hurt1",
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-hurt2",
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-hurt3",
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-hurt4",
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-hurt5",
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-hurt6"
+    ]
+  },
+  "entity-happy_ghast-death": {
+    "subtitle": "sound.happy-ghast-mod.entity-happy_ghast-death",
+    "sounds": [
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-death"
+    ]
+  },
+  "entity-happy_ghast-goggles-down": {
+    "subtitle": "sound.happy-ghast-mod.entity-happy_ghast-goggles-down",
+    "sounds": [
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-goggles-down"
+    ]
+  },
+  "entity-happy_ghast-goggles-up": {
+    "subtitle": "sound.happy-ghast-mod.entity-happy_ghast-goggles-up",
+    "sounds": [
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-goggles-up"
+    ]
+  },
+  "entity-happy-ghast-harness-equip": {
+    "subtitle": "sound.happy-ghast-mod.entity-entity-happy-ghast-harness-equip",
+    "sounds": [
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-harness-equip"
+    ]
+  },
+  "entity-happy-ghast-harness-unequip": {
+    "subtitle": "sound.happy-ghast-mod.entity-happy-ghast-harness-unequip",
+    "sounds": [
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-harness-unequip"
+    ]
+  },
+  "entity-happy-ghast-ride": {
+    "subtitle": "sound.happy-ghast-mod.entity-happy-ghast-ride",
+    "sounds": [
+      "happy-ghast-mod:mob/happy_ghast/happy-ghast-ride"
+    ]
+  },
+  "entity-ghastling-ambient": {
+    "subtitle": "sound.happy-ghast-mod.entity-ghastling-ambient",
+    "sounds": [
+      "happy-ghast-mod:mob/ghastling/ghastling1",
+      "happy-ghast-mod:mob/ghastling/ghastling2",
+      "happy-ghast-mod:mob/ghastling/ghastling3",
+      "happy-ghast-mod:mob/ghastling/ghastling4",
+      "happy-ghast-mod:mob/ghastling/ghastling5",
+      "happy-ghast-mod:mob/ghastling/ghastling6",
+      "happy-ghast-mod:mob/ghastling/ghastling7"
+    ]
+  },
+  "entity-ghastling-hurt": {
+    "subtitle": "sound.happy-ghast-mod.entity-ghastling-hurt",
+    "sounds": [
+      "happy-ghast-mod:mob/ghastling/ghastling_hurt1",
+      "happy-ghast-mod:mob/ghastling/ghastling_hurt2",
+      "happy-ghast-mod:mob/ghastling/ghastling_hurt3",
+      "happy-ghast-mod:mob/ghastling/ghastling_hurt4",
+      "happy-ghast-mod:mob/ghastling/ghastling_hurt5"
+    ]
+  },
+  "entity-ghastling-death": {
+    "subtitle": "sound.happy-ghast-mod.entity-ghastling-death",
+    "sounds": [
+      "happy-ghast-mod:mob/ghastling/ghastling-death"
+    ]
+  },
+  "entity-ghastling-spawn": {
+    "subtitle": "sound.happy-ghast-mod.entity-ghastling-spawn",
+    "sounds": [
+      "happy-ghast-mod:mob/ghastling/ghastling-spawn"
+    ]
+  }
+}
