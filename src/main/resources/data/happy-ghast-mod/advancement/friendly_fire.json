@@ -1,0 +1,24 @@
+{
+  "parent": "happy-ghast-mod:spawn_happy_ghast",
+  "criteria": {
+    "friendly_fire_criterion": {
+      "trigger": "happy-ghast-mod:friendly_fire_criterion"
+    }
+  },
+  "display": {
+    "background": "happy-ghast-mod:gui/advancements/backgrounds/happy_ghast_advancements",
+    "description": "Kill a Ghast with a Happy Ghast's fireball",
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "happy-ghast-mod:friendly_fire_icon"
+    },
+    "title": "Friendly Fire"
+  },
+  "requirements": [
+    [
+      "friendly_fire_criterion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

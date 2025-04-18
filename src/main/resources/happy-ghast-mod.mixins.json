@@ -1,0 +1,17 @@
+{
+	"required": true,
+	"package": "net.blazinblaze.happyghastmod.mixin",
+	"compatibilityLevel": "JAVA_21",
+	"mixins": [
+		"ExampleMixin",
+		"DriedGhastSpawnMixin",
+		"GhastWorldTransformMixin",
+		"SnowballMixin",
+      	"ControlsMixin",
+		"GhastNetherTransformMixin",
+		"FriendlyFireMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

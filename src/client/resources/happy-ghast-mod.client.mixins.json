@@ -1,0 +1,12 @@
+{
+	"required": true,
+	"package": "net.blazinblaze.happyghastmod.mixin.client",
+	"compatibilityLevel": "JAVA_21",
+	"client": [
+		"ExampleClientMixin",
+		"CameraMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}

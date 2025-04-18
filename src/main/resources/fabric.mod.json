@@ -1,0 +1,47 @@
+{
+	"schemaVersion": 1,
+	"id": "happy-ghast-mod",
+	"version": "${version}",
+	"name": "Blain Happy Ghasts",
+	"description": "Adds the 1.21.6 Happy Ghasts into the game, along with many other additions!",
+	"authors": [
+		"BlazinBlaze"
+	],
+	"contact": {
+		"homepage": "https://youtube.com/@BlazinBlaze",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "GPL-3.0",
+	"icon": "assets/happy-ghast-mod/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.blazinblaze.happyghastmod.HappyGhastMod"
+		],
+		"client": [
+			"net.blazinblaze.happyghastmod.HappyGhastModClient"
+		],
+		"fabric-datagen": [
+			"net.blazinblaze.happyghastmod.HappyGhastModDataGenerator"
+		],
+		"mm:early_risers": [
+          "net.blazinblaze.happyghastmod.mm.EarlyRisers"
+		]
+	},
+	"mixins": [
+		"happy-ghast-mod.mixins.json",
+		{
+			"config": "happy-ghast-mod.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.21.5",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

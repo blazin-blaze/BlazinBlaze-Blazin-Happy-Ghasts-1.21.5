@@ -1,0 +1,22 @@
+{
+  "criteria": {
+    "happy_ghast_criterion": {
+      "trigger": "minecraft:tick"
+    }
+  },
+  "display": {
+    "background": "happy-ghast-mod:gui/advancements/backgrounds/happy_ghast_advancements",
+    "description": "This is the start of a happy journey.",
+    "icon": {
+      "count": 1,
+      "id": "happy-ghast-mod:happy_ghast_icon"
+    },
+    "title": "Happy Ghasts!"
+  },
+  "requirements": [
+    [
+      "happy_ghast_criterion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

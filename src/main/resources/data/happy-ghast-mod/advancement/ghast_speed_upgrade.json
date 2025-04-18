@@ -1,0 +1,31 @@
+{
+  "parent": "happy-ghast-mod:spawn_happy_ghast",
+  "criteria": {
+    "ghast_strength_upgrade_criterion": {
+      "conditions": {
+        "items": [
+          {
+            "items": "happy-ghast-mod:happy_ghast_speed_upgrade"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "happy-ghast-mod:gui/advancements/backgrounds/happy_ghast_advancements",
+    "description": "Acquire a Happy Ghast Speed Upgrade.",
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "happy-ghast-mod:happy_ghast_speed_upgrade"
+    },
+    "title": "Happy Speed++"
+  },
+  "requirements": [
+    [
+      "ghast_strength_upgrade_criterion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

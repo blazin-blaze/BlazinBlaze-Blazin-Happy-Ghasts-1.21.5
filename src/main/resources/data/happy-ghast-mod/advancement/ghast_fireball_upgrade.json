@@ -1,0 +1,31 @@
+{
+  "parent": "happy-ghast-mod:ghast_heart_upgrade",
+  "criteria": {
+    "ghast_strength_upgrade_criterion": {
+      "conditions": {
+        "items": [
+          {
+            "items": "happy-ghast-mod:happy_ghast_fireball_upgrade"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "happy-ghast-mod:gui/advancements/backgrounds/happy_ghast_advancements",
+    "description": "Acquire a Happy Ghast Fireball Upgrade.",
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "happy-ghast-mod:happy_ghast_fireball_upgrade"
+    },
+    "title": "Happy Fireballs++"
+  },
+  "requirements": [
+    [
+      "ghast_strength_upgrade_criterion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
