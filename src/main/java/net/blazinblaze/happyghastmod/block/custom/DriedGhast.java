@@ -75,15 +75,13 @@ public class DriedGhast extends FacingBlock implements Waterloggable {
     @Override
     protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if(state.get(WATERLOGGED)) {
-            HappyGhastMod.LOGGER.warn("RANDOM TICK TRUE!");
             float f = 0.1F;
+            world.spawnParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 1, 0, 0.2, 0, 0.5);
             if (random.nextFloat() < 0.1F) {
                 world.setBlockState(pos, HappyGhastBlocks.NEUTRAL_DRIED_GHAST.getDefaultState().with(NeutralDriedGhast.WATERLOGGED, true).with(NeutralDriedGhast.FACING, state.get(FACING)));
                 world.spawnParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 1, 0, 0.2, 0, 0.5);
             }
         }
-
-        HappyGhastMod.LOGGER.warn("RANDOM TICK!");
     }
 
     @Override

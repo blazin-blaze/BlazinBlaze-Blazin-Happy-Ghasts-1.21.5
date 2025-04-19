@@ -1,0 +1,29 @@
+{
+  "parent": "happy-ghast-mod:happy_ghast",
+  "criteria": {
+    "happy_royalty_criterion": {
+      "trigger": "happy-ghast-mod:happy_royalty_criterion"
+    }
+  },
+  "display": {
+    "background": "happy-ghast-mod:gui/advancements/backgrounds/happy_ghast_advancements",
+    "description": "Get every single Happy Ghast advancement.",
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "happy-ghast-mod:happy_ghast_royalty_upgrade"
+    },
+    "title": "Happy Royalty"
+  },
+  "requirements": [
+    [
+      "happy_royalty_criterion"
+    ]
+  ],
+  "rewards": {
+    "loot": [
+      "happy-ghast-mod:advancement_rewards/happy_royalty_loot_table"
+    ]
+  },
+  "sends_telemetry_event": true
+}

@@ -126,13 +126,14 @@ public class Ghastling extends FlyingEntity implements Leashable, Ownable {
         if(player.getWorld() instanceof ServerWorld serverWorld) {
             if(item == Items.SNOWBALL) {
                 this.heal(1.0F);
-                this.playSound(SoundEvents.ENTITY_SLIME_SQUISH, this.getSoundVolume(), 1.0f);
+                this.playSound(SoundEvents.BLOCK_SNOW_BREAK, this.getSoundVolume(), 1.0f);
+                serverWorld.spawnParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 1, 0.2, 0.2, 0, 0.5);
                 if(getGhastlingGrowth() >= 24000) {
                     this.convertTo(HappyGhastEntities.HAPPY_GHAST, EntityConversionContext.create(this, false, false), (happyGhast) -> happyGhast.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 20*5, 1, true, true)));
                 }else {
                     setGhastlingGrowth(getGhastlingGrowth() + 1700);
                     itemStack.decrementUnlessCreative(1, player);
-                    serverWorld.addParticleClient(ParticleTypes.HAPPY_VILLAGER, (this.getX() + .5), (this.getY() + .3), this.getZ(), 1.0, 1.0, 1.0);
+                    serverWorld.spawnParticles(ParticleTypes.HAPPY_VILLAGER, this.getX(), this.getY(), this.getZ(), 1, 0.2, 0.2, 0, 0.5);
 
                     if(getGhastlingGrowth() >= 24000) {
                         this.convertTo(HappyGhastEntities.HAPPY_GHAST, EntityConversionContext.create(this, false, false), (happyGhast) -> happyGhast.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 20*5, 1, true, true)));

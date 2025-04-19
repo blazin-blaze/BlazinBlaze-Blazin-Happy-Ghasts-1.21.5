@@ -4,6 +4,7 @@ import net.blazinblaze.happyghastmod.achievement.HappyGhastCriteria;
 import net.blazinblaze.happyghastmod.attachments.HappyGhastAttachments;
 import net.blazinblaze.happyghastmod.block.HappyGhastBlocks;
 import net.blazinblaze.happyghastmod.component.HappyGhastComponents;
+import net.blazinblaze.happyghastmod.datagen.HappyGhastAdvancementProvider;
 import net.blazinblaze.happyghastmod.entity.HappyGhastEntities;
 import net.blazinblaze.happyghastmod.item.HappyGhastItems;
 import net.blazinblaze.happyghastmod.loot.HappyGhastLootTableModifiers;
@@ -19,6 +20,7 @@ import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
 import net.fabricmc.fabric.api.screenhandler.v1.ExtendedScreenHandlerType;
 import net.fabricmc.fabric.mixin.event.interaction.PlayerAdvancementTrackerMixin;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.advancement.*;
 import net.minecraft.advancement.criterion.Criteria;
 import net.minecraft.advancement.criterion.Criterion;
@@ -33,6 +35,7 @@ import net.minecraft.resource.featuretoggle.FeatureSet;
 import net.minecraft.screen.ScreenHandlerType;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.PlayerManager;
+import net.minecraft.server.ServerAdvancementLoader;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.text.Text;
@@ -117,27 +120,15 @@ public class HappyGhastMod implements ModInitializer {
 
 		ServerTickEvents.START_SERVER_TICK.register((server -> {
 			PlayerManager manager = server.getPlayerManager();
+			ServerAdvancementLoader loader = server.getAdvancementLoader();
 
 			for(int i = 0; i < manager.getPlayerList().size(); i++) {
 				ServerPlayerEntity player = manager.getPlayerList().get(i);
 				ServerWorld world = player.getServerWorld();
-				DynamicRegistryManager registryManager = world.getRegistryManager();
 
-				//Optional<RegistryEntry.Reference<Advancement>> advancement1 = registryManager.getOrThrow(RegistryKeys.ADVANCEMENT).getEntry(Identifier.of(HappyGhastMod.MOD_ID, ":spawn_ghastling"));
-				//Optional<RegistryEntry.Reference<Advancement>> advancement2 = registryManager.getOrThrow(RegistryKeys.ADVANCEMENT).getEntry(Identifier.of(HappyGhastMod.MOD_ID, ":spawn_happy_ghast"));
-				//Optional<RegistryEntry.Reference<Advancement>> advancement3 = registryManager.getOrThrow(RegistryKeys.ADVANCEMENT).getEntry(Identifier.of(HappyGhastMod.MOD_ID, ":ghast_speed_upgrade"));
-				//Optional<RegistryEntry.Reference<Advancement>> advancement4 = registryManager.getOrThrow(RegistryKeys.ADVANCEMENT).getEntry(Identifier.of(HappyGhastMod.MOD_ID, ":thousand_snowball"));
-				//Optional<RegistryEntry.Reference<Advancement>> advancement5 = registryManager.getOrThrow(RegistryKeys.ADVANCEMENT).getEntry(Identifier.of(HappyGhastMod.MOD_ID, ":golden_snowball"));
-				//Optional<RegistryEntry.Reference<Advancement>> advancement6 = registryManager.getOrThrow(RegistryKeys.ADVANCEMENT).getEntry(Identifier.of(HappyGhastMod.MOD_ID, ":ghast_strength_upgrade"));
-				//Optional<RegistryEntry.Reference<Advancement>> advancement7 = registryManager.getOrThrow(RegistryKeys.ADVANCEMENT).getEntry(Identifier.of(HappyGhastMod.MOD_ID, ":ghast_heart_upgrade"));
-				//Optional<RegistryEntry.Reference<Advancement>> advancement8 = registryManager.getOrThrow(RegistryKeys.ADVANCEMENT).getEntry(Identifier.of(HappyGhastMod.MOD_ID, ":ghast_fireball_upgrade"));
-				//Optional<RegistryEntry.Reference<Advancement>> advancement9 = registryManager.getOrThrow(RegistryKeys.ADVANCEMENT).getEntry(Identifier.of(HappyGhastMod.MOD_ID, ":happy_ghast_nether"));
-				//Optional<RegistryEntry.Reference<Advancement>> advancement10 = registryManager.getOrThrow(RegistryKeys.ADVANCEMENT).getEntry(Identifier.of(HappyGhastMod.MOD_ID, ":absolute_betrayal"));
-				//Optional<RegistryEntry.Reference<Advancement>> advancement11 = registryManager.getOrThrow(RegistryKeys.ADVANCEMENT).getEntry(Identifier.of(HappyGhastMod.MOD_ID, ":happy_ghast_end"));
-				//Optional<RegistryEntry.Reference<Advancement>> advancement12 = registryManager.getOrThrow(RegistryKeys.ADVANCEMENT).getEntry(Identifier.of(HappyGhastMod.MOD_ID, ":free_ghast"));
-				//Optional<RegistryEntry.Reference<Advancement>> advancement13 = registryManager.getOrThrow(RegistryKeys.ADVANCEMENT).getEntry(Identifier.of(HappyGhastMod.MOD_ID, ":friendly_fire"));
-
-				//player.getAdvancementTracker().getProgress(new AdvancementEntry(Identifier.of(HappyGhastMod.MOD_ID, ":spawn_ghastling"), ))
+				if(!player.getAdvancementTracker().getProgress(loader.get(Identifier.of(HappyGhastMod.MOD_ID, "happy_royalty"))).isDone()) {
+					HappyGhastCriteria.HAPPY_ROYALTY.trigger(player);
+				}
 			}
 		}));
 	}

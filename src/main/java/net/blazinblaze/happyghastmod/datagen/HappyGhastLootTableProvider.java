@@ -29,5 +29,12 @@ public class HappyGhastLootTableProvider extends SimpleFabricLootTableProvider {
                         .with(ItemEntry.builder(HappyGhastItems.SNOWBALL_GOLDEN_ITEM) // With an entry that has diamond(s)
                                 .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1.0f)))) // One diamond
                 ));
+
+        lootTableBiConsumer.accept(HappyGhastLootTables.HAPPY_ROYALTY_LOOT_TABLE, LootTable.builder()
+                .pool(LootPool.builder() // One pool
+                        .rolls(ConstantLootNumberProvider.create(1.0f))
+                        .with(ItemEntry.builder(HappyGhastItems.HAPPY_GHAST_ROYALTY_UPGRADE) // With an entry that has diamond(s)
+                                .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1.0f)))) // One diamond
+                ));
     }
 }

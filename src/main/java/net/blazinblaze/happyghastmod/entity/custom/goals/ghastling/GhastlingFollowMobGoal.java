@@ -117,7 +117,7 @@ public class GhastlingFollowMobGoal extends Goal {
                 if(this.target instanceof PlayerEntity) {
                     Random random = new Random();
                     if(random.nextFloat() < 0.3F) {
-                        world.addParticleClient(ParticleTypes.HEART, this.happyGhast.lastX, this.happyGhast.lastY, this.happyGhast.lastZ, 1.0F, 1.0F, 1.0F);
+                        world.spawnParticles(ParticleTypes.HEART, this.happyGhast.getX(), this.happyGhast.getY(), this.happyGhast.getZ(), 1, 0.2, 0.2, 0, 0.5);
                     }
                 }
             }

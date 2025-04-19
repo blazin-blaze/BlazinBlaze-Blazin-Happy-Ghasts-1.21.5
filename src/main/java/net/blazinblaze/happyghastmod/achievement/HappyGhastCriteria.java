@@ -13,6 +13,7 @@ public class HappyGhastCriteria {
     public static final ThousandSnowballCriterion THOUSAND_SNOWBALL = Criteria.register(HappyGhastMod.MOD_ID + ":thousand_snowball_criterion", new ThousandSnowballCriterion());
     public static final GoldenSnowballCriterion GOLDEN_SNOWBALL = Criteria.register(HappyGhastMod.MOD_ID + ":golden_snowball_criterion", new GoldenSnowballCriterion());
     public static final FriendlyFireCriterion FRIENDLY_FIRE = Criteria.register(HappyGhastMod.MOD_ID + ":friendly_fire_criterion", new FriendlyFireCriterion());
+    public static final HappyRoyaltyCriterion HAPPY_ROYALTY = Criteria.register(HappyGhastMod.MOD_ID + ":happy_royalty_criterion", new HappyRoyaltyCriterion());
 
     public static void init() {
 

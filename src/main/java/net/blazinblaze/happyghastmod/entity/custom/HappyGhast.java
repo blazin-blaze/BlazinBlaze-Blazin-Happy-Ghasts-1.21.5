@@ -43,6 +43,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.nbt.NbtList;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.registry.DynamicRegistryManager;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.entry.RegistryEntry;
@@ -488,9 +489,10 @@ public class HappyGhast extends FlyingEntity implements Ownable, Leashable, Ride
                 this.playSound(HappyGhastSounds.HAPPY_GHAST_HARNESS_UNEQUIP, this.getSoundVolume(), 1.0f);
                 return ActionResult.SUCCESS;
             } else if(player.getStackInHand(hand).getItem() == Items.SNOWBALL) {
-                if(!this.getWorld().isClient()) {
+                if(this.getWorld() instanceof ServerWorld serverWorld) {
                     this.heal(1F);
-                    this.playSound(SoundEvents.ENTITY_SLIME_SQUISH, this.getSoundVolume(), 1.0f);
+                    this.playSound(SoundEvents.BLOCK_SNOW_BREAK, this.getSoundVolume(), 1.0f);
+                    serverWorld.spawnParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 1, 0.5, 0.5, 0, 0.5);
                     ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
                     int data = serverPlayer.getAttachedOrCreate(HappyGhastAttachments.SNOWBALL_COUNT, HappyGhastAttachments.SNOWBALL_COUNT.initializer());
 
@@ -511,8 +513,9 @@ public class HappyGhast extends FlyingEntity implements Ownable, Leashable, Ride
 
                 return ActionResult.PASS;
             }else if(player.getStackInHand(hand).getItem() == HappyGhastItems.SNOWBALL_GOLDEN_ITEM) {
-                if(!this.getWorld().isClient()) {
-                    this.playSound(SoundEvents.ENTITY_SLIME_SQUISH, this.getSoundVolume(), 0.5f);
+                if(this.getWorld() instanceof ServerWorld serverWorld) {
+                    this.playSound(SoundEvents.BLOCK_SNOW_BREAK, this.getSoundVolume(), 0.5f);
+                    serverWorld.spawnParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 1, 0.5, 0.5, 0, 0.5);
                     this.heal(24.0F);
                     return ActionResult.SUCCESS;
                 }
@@ -525,9 +528,10 @@ public class HappyGhast extends FlyingEntity implements Ownable, Leashable, Ride
             return super.interactMob(player, hand);
         } else {
             if(player.getStackInHand(hand).getItem() == Items.SNOWBALL) {
-                if(!this.getWorld().isClient()) {
+                if(this.getWorld() instanceof ServerWorld serverWorld) {
                     this.heal(1F);
-                    this.playSound(SoundEvents.ENTITY_SLIME_SQUISH, this.getSoundVolume(), 1.0f);
+                    this.playSound(SoundEvents.BLOCK_SNOW_BREAK, this.getSoundVolume(), 1.0f);
+                    serverWorld.spawnParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 1, 0.5, 0.5, 0, 0.5);
                     ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
                     int data = serverPlayer.getAttachedOrCreate(HappyGhastAttachments.SNOWBALL_COUNT, HappyGhastAttachments.SNOWBALL_COUNT.initializer());
 
@@ -548,8 +552,9 @@ public class HappyGhast extends FlyingEntity implements Ownable, Leashable, Ride
 
                 return ActionResult.PASS;
             }else if(player.getStackInHand(hand).getItem() == HappyGhastItems.SNOWBALL_GOLDEN_ITEM) {
-                if(!this.getWorld().isClient()) {
-                    this.playSound(SoundEvents.ENTITY_SLIME_SQUISH, this.getSoundVolume(), 0.5f);
+                if(this.getWorld() instanceof ServerWorld serverWorld) {
+                    this.playSound(SoundEvents.BLOCK_SNOW_BREAK, this.getSoundVolume(), 0.5f);
+                    serverWorld.spawnParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 1, 0.5, 0.5, 0, 0.5);
                     this.heal(24.0F);
                     return ActionResult.SUCCESS;
                 }

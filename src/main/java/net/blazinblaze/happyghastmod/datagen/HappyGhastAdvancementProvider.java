@@ -37,7 +37,7 @@ public class HappyGhastAdvancementProvider extends FabricAdvancementProvider {
         AdvancementEntry happyGhast = Advancement.Builder.create()
                 .display(
                         HappyGhastItems.HAPPY_GHAST_ICON,
-                        Text.literal("Happy Ghasts!"),
+                        Text.literal("Blazin Happy Ghasts"),
                         Text.literal("This is the start of a happy journey."),
                         Identifier.of(HappyGhastMod.MOD_ID, "gui/advancements/backgrounds/happy_ghast_advancements"),
                         AdvancementFrame.TASK,
@@ -244,19 +244,20 @@ public class HappyGhastAdvancementProvider extends FabricAdvancementProvider {
                 )
                 .criterion("friendly_fire_criterion", HappyGhastCriteria.FRIENDLY_FIRE.create(new FriendlyFireCriterion.Conditions(Optional.empty())))
                 .build(consumer, HappyGhastMod.MOD_ID + ":friendly_fire");
-        //AdvancementEntry happyRoyalty = Advancement.Builder.create()
-                //.parent(happyGhast)
-                //.display(
-                        //HappyGhastItems.HAPPY_GHAST_ROYALTY_UPGRADE,
-                        //Text.literal("Happy Royalty"),
-                        //Text.literal("Get every single Happy Ghast advancement."),
-                        //Identifier.of(HappyGhastMod.MOD_ID, "gui/advancements/backgrounds/happy_ghast_advancements"),
-                        //AdvancementFrame.CHALLENGE,
-                        //true,
-                        //true,
-                        //false
-                //)
-                //.criterion("happy_royalty_criterion", HappyGhastCriteria.FRIENDLY_FIRE.create(new FriendlyFireCriterion.Conditions(Optional.empty()))) //find way to check if a player has an advancement
-                //.build(consumer, HappyGhastMod.MOD_ID + ":happy_royalty");
+        AdvancementEntry happyRoyalty = Advancement.Builder.create()
+                .parent(happyGhast)
+                .display(
+                        HappyGhastItems.HAPPY_GHAST_ROYALTY_UPGRADE,
+                        Text.literal("Happy Royalty"),
+                        Text.literal("Get every single Happy Ghast advancement."),
+                        Identifier.of(HappyGhastMod.MOD_ID, "gui/advancements/backgrounds/happy_ghast_advancements"),
+                        AdvancementFrame.CHALLENGE,
+                        true,
+                        true,
+                        false
+                )
+                .criterion("happy_royalty_criterion", HappyGhastCriteria.HAPPY_ROYALTY.create(new HappyRoyaltyCriterion.Conditions(Optional.empty())))
+                .rewards(AdvancementRewards.Builder.loot(HappyGhastLootTables.HAPPY_ROYALTY_LOOT_TABLE).build())
+                .build(consumer, HappyGhastMod.MOD_ID + ":happy_royalty");
     }
 }

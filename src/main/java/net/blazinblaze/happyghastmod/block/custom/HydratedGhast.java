@@ -69,6 +69,7 @@ public class HydratedGhast extends FacingBlock implements Waterloggable {
     protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if(state.get(WATERLOGGED)) {
             float f = 0.1F;
+            world.spawnParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 1, 0, 0.2, 0, 0.5);
             if (random.nextFloat() < 0.1F) {
                 world.setBlockState(pos, Blocks.AIR.getDefaultState());
                 world.spawnParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 1, 0, 0.2, 0, 0.5);
@@ -76,6 +77,7 @@ public class HydratedGhast extends FacingBlock implements Waterloggable {
             }
         }else {
             float f = 0.1F;
+            world.spawnParticles(ParticleTypes.ANGRY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 1, 0, 0.2, 0, 0.5);
             if (random.nextFloat() < 0.1F) {
                 world.setBlockState(pos, HappyGhastBlocks.NEUTRAL_DRIED_GHAST.getDefaultState().with(NeutralDriedGhast.WATERLOGGED, false).with(NeutralDriedGhast.FACING, state.get(FACING)));
                 world.spawnParticles(ParticleTypes.ANGRY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 1, 0, 0.2, 0, 0.5);

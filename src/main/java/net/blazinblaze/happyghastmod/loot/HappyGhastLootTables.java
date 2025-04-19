@@ -8,4 +8,5 @@ import net.minecraft.util.Identifier;
 
 public class HappyGhastLootTables {
     public static RegistryKey<LootTable> GOLDEN_SNOWBALL_LOOT_TABLE = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.of(HappyGhastMod.MOD_ID, "advancement_rewards/golden_snowball_loot_table"));
+    public static RegistryKey<LootTable> HAPPY_ROYALTY_LOOT_TABLE = RegistryKey.of(RegistryKeys.LOOT_TABLE, Identifier.of(HappyGhastMod.MOD_ID, "advancement_rewards/happy_royalty_loot_table"));
 }
