@@ -30,12 +30,12 @@ public class HappyGhastLookGoal extends Goal {
     public void tick() {
         if (this.happyGhast.getTarget() == null) {
             Vec3d vec3 = this.happyGhast.getVelocity();
-            this.happyGhast.setYaw(-((float) MathHelper.atan2(vec3.x, vec3.z)) * (180F / (float) Math.PI));
+            this.happyGhast.setYaw(-((float) MathHelper.atan2(vec3.y, vec3.z)) * (180F / (float) Math.PI));
             this.happyGhast.bodyYaw = this.happyGhast.getYaw();
         } else {
             LivingEntity livingEntity = this.happyGhast.getTarget();
             if (livingEntity.squaredDistanceTo(this.happyGhast) < 256D) {
-                double e = livingEntity.getX() - this.happyGhast.getX();
+                double e = livingEntity.getY() - this.happyGhast.getY();
                 double f = livingEntity.getZ() - this.happyGhast.getZ();
                 this.happyGhast.setYaw(-((float) MathHelper.atan2(e, f)) * (180F / (float) Math.PI));
                 this.happyGhast.bodyYaw = this.happyGhast.getYaw();

@@ -73,7 +73,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.sound.midi.Track;
 import java.util.*;
 
-public class HappyGhast extends FlyingEntity implements Ownable, Leashable, RideableInventory {
+public class HappyGhast extends PathAwareEntity implements Ownable, Leashable, RideableInventory {
 
     private static final TrackedData<Boolean> SHOOTING;
     private static final TrackedData<Integer> COOLDOWN;
@@ -90,7 +90,7 @@ public class HappyGhast extends FlyingEntity implements Ownable, Leashable, Ride
     protected SimpleInventory items;
     private Optional<GlobalPos> homePosition = Optional.empty();
 
-    public HappyGhast(EntityType<? extends FlyingEntity> entityType, World world) {
+    public HappyGhast(EntityType<? extends PathAwareEntity> entityType, World world) {
         super(entityType, world);
         this.experiencePoints = 5;
         this.moveControl = new GhastMoveControl(this);
@@ -175,7 +175,7 @@ public class HappyGhast extends FlyingEntity implements Ownable, Leashable, Ride
     }
 
     public static DefaultAttributeContainer.Builder createGhastAttributes() {
-        return MobEntity.createMobAttributes().add(EntityAttributes.MAX_HEALTH, (double)15.0F).add(EntityAttributes.FOLLOW_RANGE, (double)100.0F).add(EntityAttributes.MOVEMENT_SPEED, 0.7F).add(EntityAttributes.TEMPT_RANGE, 25.0F);
+        return MobEntity.createMobAttributes().add(EntityAttributes.MAX_HEALTH, (double)20.0F).add(EntityAttributes.FOLLOW_RANGE, (double)100.0F).add(EntityAttributes.MOVEMENT_SPEED, 0.7F).add(EntityAttributes.TEMPT_RANGE, 25.0F);
     }
 
     @Override
@@ -337,7 +337,11 @@ public class HappyGhast extends FlyingEntity implements Ownable, Leashable, Ride
                 Vec3d vec3d2 = new Vec3d(f, g, h);
                 ServerWorld world = (ServerWorld) this.getWorld();
                 HappyGhastFireballEntity fireballEntity = new HappyGhastFireballEntity(world, this, vec3d2.normalize(), this.getFireballStrength(), player.getUuidAsString());
-                fireballEntity.setPosition(this.getX() + vec3d.x * (double)4.0F, this.getBodyY((double)0.5F) + (double)0.5F, fireballEntity.getZ() + vec3d.z * (double)4.0F);
+                if(this.getSpeedUpg()) {
+                    fireballEntity.setPosition(this.getX() + vec3d.x * (double)5.5F, this.getBodyY((double)0.5F) + (double)0.5F, fireballEntity.getZ() + vec3d.z * (double)5.5F);
+                }else {
+                    fireballEntity.setPosition(this.getX() + vec3d.x * (double)4.0F, this.getBodyY((double)0.5F) + (double)0.5F, fireballEntity.getZ() + vec3d.z * (double)4.0F);
+                }
                 world.spawnEntity(fireballEntity);
             }
         }
@@ -351,6 +355,11 @@ public class HappyGhast extends FlyingEntity implements Ownable, Leashable, Ride
         if(Boolean.TRUE.equals(controllingPlayer.getAttached(HappyGhastAttachments.SPRINT_INPUT))) {
             shootFireball(controllingPlayer);
         }
+    }
+
+    @Override
+    public boolean handleFallDamage(double fallDistance, float damagePerDistance, DamageSource damageSource) {
+        return false;
     }
 
     @Override
@@ -471,20 +480,9 @@ public class HappyGhast extends FlyingEntity implements Ownable, Leashable, Ride
     }
 
     @Override
-    protected float getSaddledSpeed(PlayerEntity controllingPlayer) {
-        return 1.0F;
-    }
-
-    @Override
     protected ActionResult interactMob(PlayerEntity player, Hand hand) {
         if (this.hasSaddleEquipped() && !this.hasPassengers()) {
-            if(!player.shouldCancelInteraction()) {
-                if(this.getPassengerList().size() < 4) {
-                    this.playSound(HappyGhastSounds.HAPPY_GHAST_RIDE, this.getSoundVolume(), 1.0f);
-                    ridePlayer(player);
-                    return ActionResult.SUCCESS;
-                }
-            }else if(player.getStackInHand(hand).getItem() == Items.SHEARS) {
+            if(player.getStackInHand(hand).getItem() == Items.SHEARS) {
                 this.dropItem(this.getEquippedStack(EquipmentSlot.SADDLE).copyAndEmpty(), true, false);
                 this.playSound(HappyGhastSounds.HAPPY_GHAST_HARNESS_UNEQUIP, this.getSoundVolume(), 1.0f);
                 return ActionResult.SUCCESS;
@@ -492,17 +490,17 @@ public class HappyGhast extends FlyingEntity implements Ownable, Leashable, Ride
                 if(this.getWorld() instanceof ServerWorld serverWorld) {
                     this.heal(1F);
                     this.playSound(SoundEvents.BLOCK_SNOW_BREAK, this.getSoundVolume(), 1.0f);
-                    serverWorld.spawnParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 1, 0.5, 0.5, 0, 0.5);
+                    serverWorld.spawnParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 1, 0, 0.5, 2.3, 0.5);
                     ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
                     int data = serverPlayer.getAttachedOrCreate(HappyGhastAttachments.SNOWBALL_COUNT, HappyGhastAttachments.SNOWBALL_COUNT.initializer());
 
-                    HappyGhastMod.LOGGER.info(String.valueOf(data));
+                    //HappyGhastMod.LOGGER.info(String.valueOf(data));
 
-                    if(data >= 10) {
+                    if(data >= 1000) {
                         HappyGhastCriteria.THOUSAND_SNOWBALL.trigger(serverPlayer);
                     }
 
-                    if(data >= 100) {
+                    if(data >= 10000) {
                         HappyGhastCriteria.GOLDEN_SNOWBALL.trigger(serverPlayer);
                     }else {
                         serverPlayer.setAttached(HappyGhastAttachments.SNOWBALL_COUNT, data + 1);
@@ -513,14 +511,19 @@ public class HappyGhast extends FlyingEntity implements Ownable, Leashable, Ride
 
                 return ActionResult.PASS;
             }else if(player.getStackInHand(hand).getItem() == HappyGhastItems.SNOWBALL_GOLDEN_ITEM) {
-                if(this.getWorld() instanceof ServerWorld serverWorld) {
+                if (this.getWorld() instanceof ServerWorld serverWorld) {
                     this.playSound(SoundEvents.BLOCK_SNOW_BREAK, this.getSoundVolume(), 0.5f);
-                    serverWorld.spawnParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 1, 0.5, 0.5, 0, 0.5);
+                    serverWorld.spawnParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 1, 0, 0.5, 2.3, 0.5);
                     this.heal(24.0F);
-                    return ActionResult.SUCCESS;
                 }
 
-                return ActionResult.PASS;
+                return ActionResult.SUCCESS;
+            } else if(!player.shouldCancelInteraction()) {
+                if(this.getPassengerList().size() < 4) {
+                    this.playSound(HappyGhastSounds.HAPPY_GHAST_RIDE, this.getSoundVolume(), 1.0f);
+                    ridePlayer(player);
+                    return ActionResult.SUCCESS;
+                }
             }else {
                 this.openInventory(player);
                 return ActionResult.SUCCESS;
@@ -531,17 +534,17 @@ public class HappyGhast extends FlyingEntity implements Ownable, Leashable, Ride
                 if(this.getWorld() instanceof ServerWorld serverWorld) {
                     this.heal(1F);
                     this.playSound(SoundEvents.BLOCK_SNOW_BREAK, this.getSoundVolume(), 1.0f);
-                    serverWorld.spawnParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 1, 0.5, 0.5, 0, 0.5);
+                    serverWorld.spawnParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 1, 0, 0.5, 2.3, 0.5);
                     ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
                     int data = serverPlayer.getAttachedOrCreate(HappyGhastAttachments.SNOWBALL_COUNT, HappyGhastAttachments.SNOWBALL_COUNT.initializer());
 
-                    HappyGhastMod.LOGGER.info(String.valueOf(data));
+                    //HappyGhastMod.LOGGER.info(String.valueOf(data));
 
-                    if(data >= 10) {
+                    if(data >= 1000) {
                         HappyGhastCriteria.THOUSAND_SNOWBALL.trigger(serverPlayer);
                     }
 
-                    if(data >= 100) {
+                    if(data >= 10000) {
                         HappyGhastCriteria.GOLDEN_SNOWBALL.trigger(serverPlayer);
                     }else {
                         serverPlayer.setAttached(HappyGhastAttachments.SNOWBALL_COUNT, data + 1);
@@ -554,12 +557,11 @@ public class HappyGhast extends FlyingEntity implements Ownable, Leashable, Ride
             }else if(player.getStackInHand(hand).getItem() == HappyGhastItems.SNOWBALL_GOLDEN_ITEM) {
                 if(this.getWorld() instanceof ServerWorld serverWorld) {
                     this.playSound(SoundEvents.BLOCK_SNOW_BREAK, this.getSoundVolume(), 0.5f);
-                    serverWorld.spawnParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 1, 0.5, 0.5, 0, 0.5);
+                    serverWorld.spawnParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 1, 0, 0.5, 2.3, 0.5);
                     this.heal(24.0F);
-                    return ActionResult.SUCCESS;
                 }
 
-                return ActionResult.PASS;
+                return ActionResult.SUCCESS;
             }
             ActionResult actionResult = super.interactMob(player, hand);
             if (!actionResult.isAccepted()) {
@@ -722,11 +724,6 @@ public class HappyGhast extends FlyingEntity implements Ownable, Leashable, Ride
 
     private void setSpeed(boolean value) {
         this.dataTracker.set(SPEED_UPGRADE, value);
-        if(Boolean.TRUE.equals(value)) {
-            if(Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.MOVEMENT_SPEED)).getModifier(Identifier.of(HappyGhastMod.MOD_ID, "ghast_max_speed_modifier")) == null) {
-                Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.MOVEMENT_SPEED)).addPersistentModifier(new EntityAttributeModifier(Identifier.of(HappyGhastMod.MOD_ID, "ghast_max_speed_modifier"), 5.0F, EntityAttributeModifier.Operation.ADD_VALUE));
-            }
-        }
     }
 
     private void setStrength(boolean value) {
@@ -741,7 +738,7 @@ public class HappyGhast extends FlyingEntity implements Ownable, Leashable, Ride
         this.dataTracker.set(HEART_UPGRADE, value);
         if(Boolean.TRUE.equals(value)) {
             if(Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.MAX_HEALTH)).getModifier(Identifier.of(HappyGhastMod.MOD_ID, "ghast_max_health_modifier")) == null) {
-                Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.MAX_HEALTH)).addPersistentModifier(new EntityAttributeModifier(Identifier.of(HappyGhastMod.MOD_ID, "ghast_max_health_modifier"), 12.0F, EntityAttributeModifier.Operation.ADD_VALUE));
+                Objects.requireNonNull(this.getAttributeInstance(EntityAttributes.MAX_HEALTH)).addPersistentModifier(new EntityAttributeModifier(Identifier.of(HappyGhastMod.MOD_ID, "ghast_max_health_modifier"), 20.0F, EntityAttributeModifier.Operation.ADD_VALUE));
             }
         }
     }
@@ -802,6 +799,7 @@ public class HappyGhast extends FlyingEntity implements Ownable, Leashable, Ride
         if (this.isSubmergedInWater()) {
             this.updateVelocity(0.02F, movementInput);
             this.move(MovementType.SELF, this.getVelocity());
+            this.addStatusEffect(new StatusEffectInstance(StatusEffects.WATER_BREATHING, 100, 1));
             this.setVelocity(this.getVelocity().multiply(0.8F));
         } else if (this.isInLava()) {
             this.updateVelocity(0.02F, movementInput);
@@ -819,9 +817,15 @@ public class HappyGhast extends FlyingEntity implements Ownable, Leashable, Ride
                 f = this.getWorld().getBlockState(this.getVelocityAffectingPos()).getBlock().getSlipperiness() * 0.91F;
             }
 
-            this.updateVelocity(this.isOnGround() ? 0.1F * g : 0.02F, movementInput);
-            this.move(MovementType.SELF, this.getVelocity());
-            this.setVelocity(this.getVelocity().multiply(f));
+            if(this.getSpeedUpg() && this.hasControllingPassenger()) {
+                this.updateVelocity(this.isOnGround() ? 0.1F * g : 0.02F * 1.06F, movementInput.multiply(1.06F));
+                this.move(MovementType.SELF, this.getVelocity().multiply(1.06F));
+                this.setVelocity(this.getVelocity().multiply(f).multiply(1.06F));
+            }else {
+                this.updateVelocity(this.isOnGround() ? 0.1F * g : 0.02F, movementInput);
+                this.move(MovementType.SELF, this.getVelocity());
+                this.setVelocity(this.getVelocity().multiply(f));
+            }
         }
     }
 
@@ -841,8 +845,9 @@ public class HappyGhast extends FlyingEntity implements Ownable, Leashable, Ride
                     Vec3d vec3d = new Vec3d(this.targetX - this.ghast.getX(), this.targetY - this.ghast.getY(), this.targetZ - this.ghast.getZ());
                     double d = vec3d.length();
                     vec3d = vec3d.normalize();
+                    double s = 0.1;
                     if (this.willCollide(vec3d, MathHelper.ceil(d))) {
-                        this.ghast.setVelocity(this.ghast.getVelocity().add(vec3d.multiply(0.1)));
+                        this.ghast.setVelocity(this.ghast.getVelocity().add(vec3d.multiply(s)));
                     } else {
                         this.state = State.WAIT;
                     }

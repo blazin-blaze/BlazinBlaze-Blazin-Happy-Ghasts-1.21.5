@@ -2,6 +2,7 @@ package net.blazinblaze.happyghastmod.entity.custom.goals;
 
 import net.blazinblaze.happyghastmod.entity.custom.HappyGhast;
 import net.minecraft.entity.ai.control.MoveControl;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.math.Box;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -36,7 +37,7 @@ public class HappyGhastMoveControl extends MoveControl {
         Box aABB = this.happyGhast.getBoundingBox();
         for (int j = 1; j < i; j++) {
             aABB = aABB.offset(vec3);
-            if (!this.happyGhast.getWorld().canCollide(this.happyGhast, aABB)) return false;
+            if (!this.happyGhast.getWorld().isSpaceEmpty(this.happyGhast, aABB)) return false;
         }
         return true;
     }
