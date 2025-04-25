@@ -29,7 +29,6 @@ public class HappyGhastUpgradeSlot extends Slot {
     public ItemStack insertStack(ItemStack stack) {
         if(stack.getComponents().get(HappyGhastComponents.IS_IN_UPGRADE_SLOT) != null) {
             stack.set(HappyGhastComponents.IS_IN_UPGRADE_SLOT, true);
-            HappyGhastMod.LOGGER.info("HELLO THIS IS EPIC");
             return stack;
         }
         return super.insertStack(stack);

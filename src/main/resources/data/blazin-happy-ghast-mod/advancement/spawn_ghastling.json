@@ -1,0 +1,24 @@
+{
+  "parent": "blazin-happy-ghast-mod:happy_ghast",
+  "criteria": {
+    "spawn_ghastling_criterion": {
+      "trigger": "blazin-happy-ghast-mod:spawn_ghastling_criterion"
+    }
+  },
+  "display": {
+    "background": "blazin-happy-ghast-mod:gui/advancements/backgrounds/happy_ghast_advancements",
+    "description": "Spawn a Ghastling.",
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "blazin-happy-ghast-mod:hydrated_ghast"
+    },
+    "title": "Rehydrated!"
+  },
+  "requirements": [
+    [
+      "spawn_ghastling_criterion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

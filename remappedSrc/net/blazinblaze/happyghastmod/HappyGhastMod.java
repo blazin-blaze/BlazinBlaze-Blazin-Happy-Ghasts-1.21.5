@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Optional;
 
 public class HappyGhastMod implements ModInitializer {
-	public static final String MOD_ID = "happy-ghast-mod";
+	public static final String MOD_ID = "blazin-blazin-happy-ghast-mod";
 
 	// This logger is used to write text to the console and the log file.
 	// It is considered best practice to use your mod id as the logger's name.
@@ -58,7 +58,7 @@ public class HappyGhastMod implements ModInitializer {
 	public static final RegistryKey<ItemGroup> CUSTOM_ITEM_GROUP_KEY = RegistryKey.of(Registries.ITEM_GROUP.getKey(), Identifier.of(MOD_ID, "happy_ghast_item_group"));
 	public static final ItemGroup CUSTOM_ITEM_GROUP = FabricItemGroup.builder()
 			.icon(() -> new ItemStack(HappyGhastBlocks.HYDRATED_GHAST.asItem()))
-			.displayName(Text.translatable("itemGroup.happy-ghast-mod"))
+			.displayName(Text.translatable("itemGroup.blazin-blazin-happy-ghast-mod"))
 			.build();
 
 	public static final ScreenHandlerType<HappyGhastUpgradeScreenHandler> GHAST_SCREEN_HANDLER = Registry.register(Registries.SCREEN_HANDLER, Identifier.of(MOD_ID, "happy_ghast_screen_handler"), new ScreenHandlerType<>(HappyGhastUpgradeScreenHandler::new, FeatureSet.empty()));

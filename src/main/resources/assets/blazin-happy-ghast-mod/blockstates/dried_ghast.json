@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "blazin-happy-ghast-mod:block/dried_ghast",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "blazin-happy-ghast-mod:block/dried_ghast"
+    },
+    "facing=south": {
+      "model": "blazin-happy-ghast-mod:block/dried_ghast",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "blazin-happy-ghast-mod:block/dried_ghast",
+      "y": 270
+    }
+  }
+}

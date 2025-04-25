@@ -1,0 +1,24 @@
+{
+  "parent": "blazin-happy-ghast-mod:spawn_happy_ghast",
+  "criteria": {
+    "happy_ghast_end_criterion": {
+      "trigger": "blazin-happy-ghast-mod:happy_ghast_end_criterion"
+    }
+  },
+  "display": {
+    "background": "blazin-happy-ghast-mod:gui/advancements/backgrounds/happy_ghast_advancements",
+    "description": "Bring a Happy Ghast to The End.",
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "blazin-happy-ghast-mod:happy_ghast_end_icon"
+    },
+    "title": "To The End and Back"
+  },
+  "requirements": [
+    [
+      "happy_ghast_end_criterion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

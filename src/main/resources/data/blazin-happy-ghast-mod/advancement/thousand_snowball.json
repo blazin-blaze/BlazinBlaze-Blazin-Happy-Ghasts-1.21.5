@@ -1,0 +1,24 @@
+{
+  "parent": "blazin-happy-ghast-mod:spawn_happy_ghast",
+  "criteria": {
+    "thousand_snowball_criterion": {
+      "trigger": "blazin-happy-ghast-mod:thousand_snowball_criterion"
+    }
+  },
+  "display": {
+    "background": "blazin-happy-ghast-mod:gui/advancements/backgrounds/happy_ghast_advancements",
+    "description": "Feed a Happy Ghast 1,000 Snowballs",
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "minecraft:snowball"
+    },
+    "title": "Hungry Ghast"
+  },
+  "requirements": [
+    [
+      "thousand_snowball_criterion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "orange_harness",
+  "key": {
+    "g": "minecraft:glass",
+    "l": "minecraft:leather",
+    "w": "minecraft:orange_wool"
+  },
+  "pattern": [
+    "lll",
+    "gwg"
+  ],
+  "result": {
+    "count": 1,
+    "id": "blazin-happy-ghast-mod:orange_harness"
+  }
+}

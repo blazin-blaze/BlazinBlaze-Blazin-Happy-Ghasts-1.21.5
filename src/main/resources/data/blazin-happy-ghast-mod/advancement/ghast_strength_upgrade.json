@@ -1,0 +1,31 @@
+{
+  "parent": "blazin-happy-ghast-mod:ghast_speed_upgrade",
+  "criteria": {
+    "ghast_strength_upgrade_criterion": {
+      "conditions": {
+        "items": [
+          {
+            "items": "blazin-happy-ghast-mod:happy_ghast_strength_upgrade"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "display": {
+    "background": "blazin-happy-ghast-mod:gui/advancements/backgrounds/happy_ghast_advancements",
+    "description": "Acquire a Happy Ghast Strength Upgrade.",
+    "frame": "goal",
+    "icon": {
+      "count": 1,
+      "id": "blazin-happy-ghast-mod:happy_ghast_strength_upgrade"
+    },
+    "title": "Happy Strength++"
+  },
+  "requirements": [
+    [
+      "ghast_strength_upgrade_criterion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}

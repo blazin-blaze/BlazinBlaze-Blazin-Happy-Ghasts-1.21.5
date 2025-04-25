@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "group": "purple_harness",
+  "key": {
+    "g": "minecraft:glass",
+    "l": "minecraft:leather",
+    "w": "minecraft:purple_wool"
+  },
+  "pattern": [
+    "lll",
+    "gwg"
+  ],
+  "result": {
+    "count": 1,
+    "id": "blazin-happy-ghast-mod:purple_harness"
+  }
+}

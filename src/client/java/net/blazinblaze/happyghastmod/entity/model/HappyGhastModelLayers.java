@@ -10,7 +10,7 @@ import net.minecraft.util.Identifier;
 import java.util.Set;
 
 public class HappyGhastModelLayers {
-    public static final EntityModelLayer HAPPY_GHAST_HARNESS = register("happy-ghast-mod", "happy_ghast_harness");
+    public static final EntityModelLayer HAPPY_GHAST_HARNESS = register("blazin-happy-ghast-mod", "happy_ghast_harness");
     public static final EquipmentModel HAPPY_GHAST_SADDLE_MODEL = registerEquipment("entity/happy_ghast_cyan_harness");
 
     //private static EntityModelLayer createMain(String name) {

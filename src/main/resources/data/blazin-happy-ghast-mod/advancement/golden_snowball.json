@@ -1,0 +1,29 @@
+{
+  "parent": "blazin-happy-ghast-mod:thousand_snowball",
+  "criteria": {
+    "golden_snowball_criterion": {
+      "trigger": "blazin-happy-ghast-mod:golden_snowball_criterion"
+    }
+  },
+  "display": {
+    "background": "blazin-happy-ghast-mod:gui/advancements/backgrounds/happy_ghast_advancements",
+    "description": "Feed a Happy Ghast 10,000 Snowballs",
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "blazin-happy-ghast-mod:snowball_golden_item"
+    },
+    "title": "Starving Ghast"
+  },
+  "requirements": [
+    [
+      "golden_snowball_criterion"
+    ]
+  ],
+  "rewards": {
+    "loot": [
+      "blazin-happy-ghast-mod:advancement_rewards/golden_snowball_loot_table"
+    ]
+  },
+  "sends_telemetry_event": true
+}

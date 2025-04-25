@@ -1,0 +1,24 @@
+{
+  "parent": "blazin-happy-ghast-mod:happy_ghast_nether",
+  "criteria": {
+    "absolute_betrayal_criterion": {
+      "trigger": "blazin-happy-ghast-mod:absolute_betrayal_criterion"
+    }
+  },
+  "display": {
+    "background": "blazin-happy-ghast-mod:gui/advancements/backgrounds/happy_ghast_advancements",
+    "description": "Abandon a Happy Ghast in the Nether.",
+    "frame": "challenge",
+    "icon": {
+      "count": 1,
+      "id": "blazin-happy-ghast-mod:happy_ghast_nether_icon"
+    },
+    "title": "Absolute Betrayal."
+  },
+  "requirements": [
+    [
+      "absolute_betrayal_criterion"
+    ]
+  ],
+  "sends_telemetry_event": true
+}
