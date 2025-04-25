@@ -80,11 +80,11 @@
   "entity-ghastling-hurt": {
     "subtitle": "sound.blazin-happy-ghast-mod.entity-ghastling-hurt",
     "sounds": [
-      "blazin-happy-ghast-mod:mob/ghastling/ghastling_hurt1",
-      "blazin-happy-ghast-mod:mob/ghastling/ghastling_hurt2",
-      "blazin-happy-ghast-mod:mob/ghastling/ghastling_hurt3",
-      "blazin-happy-ghast-mod:mob/ghastling/ghastling_hurt4",
-      "blazin-happy-ghast-mod:mob/ghastling/ghastling_hurt5"
+      "blazin-happy-ghast-mod:mob/ghastling/ghastling-hurt1",
+      "blazin-happy-ghast-mod:mob/ghastling/ghastling-hurt2",
+      "blazin-happy-ghast-mod:mob/ghastling/ghastling-hurt3",
+      "blazin-happy-ghast-mod:mob/ghastling/ghastling-hurt4",
+      "blazin-happy-ghast-mod:mob/ghastling/ghastling-hurt5"
     ]
   },
   "entity-ghastling-death": {

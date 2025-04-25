@@ -73,10 +73,10 @@ public class HappyGhastItems {
                 .build();
     }
 
-    public static final Item GHASTLING_SPAWN_EGG = registerSpawnEgg((String)"ghastling_spawn_egg", (Function)
+    public static final Item GHASTLING_SPAWN_EGG = registerSpawnEgg((String)"ghastling_spawn_egg",
             ((settings)
                     -> new SpawnEggItem(HappyGhastEntities.GHASTLING, (Item.Settings) settings)));
-    public static final Item HAPPY_GHAST_SPAWN_EGG = registerSpawnEgg((String)"happy_ghast_spawn_egg", (Function)
+    public static final Item HAPPY_GHAST_SPAWN_EGG = registerSpawnEgg((String)"happy_ghast_spawn_egg",
             ((settings)
                     -> new SpawnEggItem(HappyGhastEntities.HAPPY_GHAST, (Item.Settings) settings)));
 
