@@ -25,6 +25,7 @@ import net.minecraft.screen.*;
 import net.minecraft.screen.slot.ForgingSlotsManager;
 import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.text.Text;
 import net.minecraft.util.StringHelper;
@@ -84,7 +85,12 @@ public class HappyGhastUpgradeScreenHandler extends ScreenHandler {
                 slot2.setStack(ItemStack.EMPTY);
             } else {
                 slot2.markDirty();
+
             }
+        }
+
+        if(!(this.getSlot(slot) instanceof HappyGhastUpgradeSlot)) {
+            player.playSoundToPlayer(SoundEvents.BLOCK_END_PORTAL_FRAME_FILL, SoundCategory.NEUTRAL, 1.0F, 0.3F);
         }
 
         return itemStack;

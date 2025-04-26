@@ -36,10 +36,12 @@ public class HappyGhastUpgradeScreen extends HandledScreen<HappyGhastUpgradeScre
         if(slot instanceof HappyGhastUpgradeSlot) {
             if(!slot.hasStack()) {
                 if(!this.getScreenHandler().getCursorStack().isEmpty()) {
-                    MinecraftClient client = MinecraftClient.getInstance();
-                    ClientPlayerEntity player = client.player;
-                    if(player != null) {
-                        player.playSound(SoundEvents.BLOCK_END_PORTAL_FRAME_FILL, 1.0F, 0.3F);
+                    if(slot.canInsert(this.getScreenHandler().getCursorStack())) {
+                        MinecraftClient client = MinecraftClient.getInstance();
+                        ClientPlayerEntity player = client.player;
+                        if(player != null) {
+                            player.playSound(SoundEvents.BLOCK_END_PORTAL_FRAME_FILL, 1.0F, 0.3F);
+                        }
                     }
                 }
             }
