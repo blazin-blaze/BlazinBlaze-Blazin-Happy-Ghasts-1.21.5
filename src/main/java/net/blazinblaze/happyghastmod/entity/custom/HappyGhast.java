@@ -175,7 +175,7 @@ public class HappyGhast extends PathAwareEntity implements Ownable, Leashable, R
     }
 
     public static DefaultAttributeContainer.Builder createGhastAttributes() {
-        return MobEntity.createMobAttributes().add(EntityAttributes.MAX_HEALTH, (double)20.0F).add(EntityAttributes.FOLLOW_RANGE, (double)100.0F).add(EntityAttributes.MOVEMENT_SPEED, 0.7F).add(EntityAttributes.TEMPT_RANGE, 25.0F);
+        return MobEntity.createMobAttributes().add(EntityAttributes.MAX_HEALTH, (double)20.0F).add(EntityAttributes.FOLLOW_RANGE, (double)100.0F).add(EntityAttributes.MOVEMENT_SPEED, 0.7F).add(EntityAttributes.TEMPT_RANGE, 25.0F).add(EntityAttributes.ENTITY_INTERACTION_RANGE, 20.0F);
     }
 
     @Override

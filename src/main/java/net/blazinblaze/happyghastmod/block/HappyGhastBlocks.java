@@ -49,21 +49,21 @@ public class HappyGhastBlocks {
     public static final Block DRIED_GHAST = register(
             "dried_ghast",
             DriedGhast::new,
-            AbstractBlock.Settings.create().solid().sounds(BlockSoundGroup.BONE).nonOpaque(),
+            AbstractBlock.Settings.create().solid().sounds(BlockSoundGroup.BONE).requiresTool().strength(2.0F, 6.0F).nonOpaque(),
             true
     );
 
     public static final Block NEUTRAL_DRIED_GHAST = register(
             "neutral_dried_ghast",
             NeutralDriedGhast::new,
-            AbstractBlock.Settings.create().solid().sounds(BlockSoundGroup.BONE).nonOpaque(),
+            AbstractBlock.Settings.create().solid().sounds(BlockSoundGroup.BONE).requiresTool().strength(2.0F, 6.0F).nonOpaque(),
             true
     );
 
     public static final Block HYDRATED_GHAST = register(
             "hydrated_ghast",
             HydratedGhast::new,
-            AbstractBlock.Settings.create().solid().sounds(BlockSoundGroup.BONE).nonOpaque(),
+            AbstractBlock.Settings.create().solid().sounds(BlockSoundGroup.BONE).requiresTool().strength(2.0F, 6.0F).nonOpaque(),
             true
     );
 

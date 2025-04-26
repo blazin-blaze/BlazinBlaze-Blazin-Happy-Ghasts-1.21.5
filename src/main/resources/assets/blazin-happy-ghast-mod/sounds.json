@@ -98,5 +98,45 @@
     "sounds": [
       "blazin-happy-ghast-mod:mob/ghastling/ghastling-spawn"
     ]
+  },
+  "block-dried-ghast-ambient": {
+    "subtitle": "sound.blazin-happy-ghast-mod.block-dried-ghast-ambient",
+    "sounds": [
+      "blazin-happy-ghast-mod:block/dried_ghast/ambient1",
+      "blazin-happy-ghast-mod:block/dried_ghast/ambient2"
+    ]
+  },
+  "block-dried-ghast-ambient-water": {
+    "subtitle": "sound.blazin-happy-ghast-mod.block-dried-ghast-ambient-water",
+    "sounds": [
+      "blazin-happy-ghast-mod:block/dried_ghast/ambient_water1",
+      "blazin-happy-ghast-mod:block/dried_ghast/ambient_water2"
+    ]
+  },
+  "block-dried-ghast-break": {
+    "subtitle": "sound.blazin-happy-ghast-mod.block-dried-ghast-break",
+    "sounds": [
+      "blazin-happy-ghast-mod:block/dried_ghast/break"
+    ]
+  },
+  "block-dried-ghast-hit": {
+    "subtitle": "sound.blazin-happy-ghast-mod.block-dried-ghast-hit",
+    "sounds": [
+      "blazin-happy-ghast-mod:block/dried_ghast/hit1",
+      "blazin-happy-ghast-mod:block/dried_ghast/hit2",
+      "blazin-happy-ghast-mod:block/dried_ghast/hit3"
+    ]
+  },
+  "block-dried-ghast-placed": {
+    "subtitle": "sound.blazin-happy-ghast-mod.block-dried-ghast-placed",
+    "sounds": [
+      "blazin-happy-ghast-mod:block/dried_ghast/placeinwater"
+    ]
+  },
+  "block-dried-ghast-transition": {
+    "subtitle": "sound.blazin-happy-ghast-mod.block-dried-ghast-transition",
+    "sounds": [
+      "blazin-happy-ghast-mod:block/dried_ghast/transition"
+    ]
   }
 }

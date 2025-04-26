@@ -2,12 +2,14 @@ package net.blazinblaze.happyghastmod.slot;
 
 import net.blazinblaze.happyghastmod.HappyGhastMod;
 import net.blazinblaze.happyghastmod.component.HappyGhastComponents;
+import net.blazinblaze.happyghastmod.entity.custom.HappyGhast;
 import net.blazinblaze.happyghastmod.item.HappyGhastItems;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.Inventory;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.screen.slot.Slot;
+import net.minecraft.sound.SoundEvents;
 
 import java.util.Objects;
 
@@ -26,12 +28,11 @@ public class HappyGhastUpgradeSlot extends Slot {
     }
 
     @Override
-    public ItemStack insertStack(ItemStack stack) {
-        if(stack.getComponents().get(HappyGhastComponents.IS_IN_UPGRADE_SLOT) != null) {
+    public void setStack(ItemStack stack) {
+        if(stack.getComponents().contains(HappyGhastComponents.IS_IN_UPGRADE_SLOT)) {
             stack.set(HappyGhastComponents.IS_IN_UPGRADE_SLOT, true);
-            return stack;
         }
-        return super.insertStack(stack);
+        super.setStack(stack);
     }
 
     @Override

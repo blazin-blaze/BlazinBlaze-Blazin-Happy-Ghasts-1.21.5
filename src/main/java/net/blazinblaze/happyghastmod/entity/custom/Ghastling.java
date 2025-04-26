@@ -131,8 +131,7 @@ public class Ghastling extends FlyingEntity implements Leashable, Ownable {
                 if(getGhastlingGrowth() >= 24000) {
                     this.convertTo(HappyGhastEntities.HAPPY_GHAST, EntityConversionContext.create(this, false, false), (happyGhast) -> happyGhast.addStatusEffect(new StatusEffectInstance(StatusEffects.FIRE_RESISTANCE, 20*5, 1, true, true)));
                 }else {
-                    setGhastlingGrowth(getGhastlingGrowth() + 1700);
-                    itemStack.decrementUnlessCreative(1, player);
+                    setGhastlingGrowth(getGhastlingGrowth() + 900);
                     serverWorld.spawnParticles(ParticleTypes.HAPPY_VILLAGER, this.getX(), this.getY(), this.getZ(), 1, 0.2, 0.2, 0, 0.5);
 
                     if(getGhastlingGrowth() >= 24000) {

@@ -24,6 +24,13 @@ public class HappyGhastSounds {
     public static final SoundEvent GHASTLING_DEATH = registerSound("entity-ghastling-death");
     public static final SoundEvent GHASTLING_SPAWN = registerSound("entity-ghastling-spawn");
 
+    public static final SoundEvent DRIED_GHAST_AMBIENT = registerSound("block-dried-ghast-ambient");
+    public static final SoundEvent DRIED_GHAST_AMBIENT_WATER = registerSound("block-dried-ghast-ambient-water");
+    public static final SoundEvent DRIED_GHAST_BREAK = registerSound("block-dried-ghast-break");
+    public static final SoundEvent DRIED_GHAST_HIT = registerSound("block-dried-ghast-hit");
+    public static final SoundEvent DRIED_GHAST_PLACED = registerSound("block-dried-ghast-placed");
+    public static final SoundEvent DRIED_GHAST_TRANSITION = registerSound("block-dried-ghast-transition");
+
     private static SoundEvent registerSound(String id) {
         Identifier identifier = Identifier.of(HappyGhastMod.MOD_ID, id);
         return Registry.register(Registries.SOUND_EVENT, identifier, SoundEvent.of(identifier));

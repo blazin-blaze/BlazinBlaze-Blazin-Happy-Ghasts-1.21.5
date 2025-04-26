@@ -14,6 +14,10 @@ public class HappyGhastRenderState extends LivingEntityRenderState {
     public int aged;
     public boolean shouldShowCrownGhast;
     public boolean inNether;
+    public boolean speedUpgrade;
+    public boolean strengthUpgrade;
+    public boolean heartUpgrade;
+    public boolean fireballUpgrade;
 
     public HappyGhastRenderState() {
         this.saddleStack = ItemStack.EMPTY;

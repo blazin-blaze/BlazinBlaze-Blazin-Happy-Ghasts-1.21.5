@@ -106,6 +106,10 @@ public class HappyGhastRenderer extends MobEntityRenderer<HappyGhast, HappyGhast
         happyGhastRenderState.isCrowned = happyGhast.getRoyalty();
         happyGhastRenderState.aged = happyGhast.getAgedValue();
         happyGhastRenderState.inNether = happyGhast.getInNether();
+        happyGhastRenderState.speedUpgrade = happyGhast.getSpeedUpg();
+        happyGhastRenderState.strengthUpgrade = happyGhast.getStrength();
+        happyGhastRenderState.heartUpgrade = happyGhast.getHeart();
+        happyGhastRenderState.fireballUpgrade = happyGhast.getFireball();
         ClientPlayerEntity player = MinecraftClient.getInstance().player;
         if(player.getAttachedOrCreate(HappyGhastClientAttachments.SHOULD_RENDER_CROWN, HappyGhastClientAttachments.SHOULD_RENDER_CROWN.initializer())) {
             happyGhastRenderState.shouldShowCrownGhast = true;

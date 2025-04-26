@@ -4,13 +4,19 @@ import com.fasterxml.jackson.databind.annotation.JsonAppend;
 import com.mojang.serialization.MapCodec;
 import net.blazinblaze.happyghastmod.HappyGhastMod;
 import net.blazinblaze.happyghastmod.block.HappyGhastBlocks;
+import net.blazinblaze.happyghastmod.sound.HappyGhastSounds;
 import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.pathing.NavigationType;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.fluid.FluidState;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.item.ItemPlacementContext;
+import net.minecraft.item.ItemStack;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.server.world.ServerWorld;
+import net.minecraft.sound.SoundCategory;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.state.property.IntProperty;
@@ -28,6 +34,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldView;
 import net.minecraft.world.block.OrientationHelper;
 import net.minecraft.world.tick.ScheduledTickView;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
@@ -44,6 +51,32 @@ public class DriedGhast extends FacingBlock implements Waterloggable {
     @Override
     protected VoxelShape getOutlineShape(BlockState state, BlockView world, BlockPos pos, ShapeContext context) {
         return SHAPE;
+    }
+
+    @Override
+    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+        if(world instanceof ServerWorld serverWorld) {
+            if(state.get(WATERLOGGED)) {
+                serverWorld.playSound(null, pos, HappyGhastSounds.DRIED_GHAST_PLACED, SoundCategory.BLOCKS, 1.0F, 1.0F);
+            }
+        }
+        super.onPlaced(world, pos, state, placer, itemStack);
+    }
+
+    @Override
+    protected void onBlockBreakStart(BlockState state, World world, BlockPos pos, PlayerEntity player) {
+        if(world instanceof ServerWorld serverWorld) {
+            serverWorld.playSound(null, pos, HappyGhastSounds.DRIED_GHAST_HIT, SoundCategory.BLOCKS, 1.0F, 1.0F);
+        }
+        super.onBlockBreakStart(state, world, pos, player);
+    }
+
+    @Override
+    public void afterBreak(World world, PlayerEntity player, BlockPos pos, BlockState state, @Nullable BlockEntity blockEntity, ItemStack tool) {
+        if(world instanceof ServerWorld serverWorld) {
+            serverWorld.playSound(null, pos, HappyGhastSounds.DRIED_GHAST_BREAK, SoundCategory.BLOCKS, 1.0F, 1.0F);
+        }
+        super.afterBreak(world, player, pos, state, blockEntity, tool);
     }
 
     @Override
@@ -76,11 +109,16 @@ public class DriedGhast extends FacingBlock implements Waterloggable {
     protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if(state.get(WATERLOGGED)) {
             float f = 0.1F;
-            world.spawnParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 1, 0, 0.2, 0, 0.5);
-            if (random.nextFloat() < 0.35F) {
+            if (random.nextFloat() < 0.25F) {
                 world.setBlockState(pos, HappyGhastBlocks.NEUTRAL_DRIED_GHAST.getDefaultState().with(NeutralDriedGhast.WATERLOGGED, true).with(NeutralDriedGhast.FACING, state.get(FACING)));
+                world.playSound(null, pos, HappyGhastSounds.DRIED_GHAST_TRANSITION, SoundCategory.BLOCKS, 1.0F, 1.0F);
+                world.spawnParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 1, 0, 0.2, 0, 0.5);
+            }else {
+                world.playSound(null, pos, HappyGhastSounds.DRIED_GHAST_AMBIENT_WATER, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 world.spawnParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 1, 0, 0.2, 0, 0.5);
             }
+        }else {
+            world.playSound(null, pos, HappyGhastSounds.DRIED_GHAST_AMBIENT, SoundCategory.BLOCKS, 1.0F, 1.0F);
         }
     }
 
