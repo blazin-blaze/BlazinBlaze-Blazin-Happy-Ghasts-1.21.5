@@ -21,6 +21,7 @@ import net.minecraft.entity.effect.StatusEffects;
 import net.minecraft.entity.mob.FlyingEntity;
 import net.minecraft.entity.mob.GhastEntity;
 import net.minecraft.entity.mob.MobEntity;
+import net.minecraft.entity.mob.PathAwareEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.FireballEntity;
 import net.minecraft.item.Item;
@@ -53,25 +54,19 @@ import java.util.Optional;
 public class Ghastling extends FlyingEntity implements Leashable, Ownable {
     private static final TrackedData<Integer> GHASTLING_GROWTH;
     private static final TrackedData<Boolean> IN_NETHER;
-    private Optional<GlobalPos> homePosition = Optional.empty();
 
     public Ghastling(EntityType<? extends FlyingEntity> entityType, World world) {
         super(entityType, world);
         this.experiencePoints = 5;
-        this.moveControl = new Ghastling.GhastMoveControl(this);
+        this.moveControl = new GhastMoveControl(this);
         this.rewardAchievement();
-    }
-
-    public void updateHomePosition() {
-        this.homePosition = Optional.of(new GlobalPos(this.getWorld().getRegistryKey(), this.getBlockPos()));
     }
 
     protected void initGoals() {
         this.goalSelector.add(1, new GhastlingTemptGoal(this, 1.25D, itemStack -> itemStack.isOf(Items.SNOWBALL), true, ghastling -> true));
-        this.goalSelector.add(2, new GhastlingGoHomeGoal(this));
-        this.goalSelector.add(3, new GhastlingFollowMobGoal(this, 1D, entity -> entity.getType().isIn(HappyGhastTags.GHASTLING_FOLLOWS)));
-        this.goalSelector.add(4, new GhastlingFloatAroundGoal(this));
-        this.goalSelector.add(5, new GhastlingLookGoal(this));
+        this.goalSelector.add(2, new GhastlingFollowMobGoal(this, 1D, entity -> entity.getType().isIn(HappyGhastTags.GHASTLING_FOLLOWS)));
+        this.goalSelector.add(3, new GhastlingFloatAroundGoal(this));
+        this.goalSelector.add(4, new GhastlingLookGoal(this));
     }
 
     @Override
@@ -184,14 +179,12 @@ public class Ghastling extends FlyingEntity implements Leashable, Ownable {
 
     public void writeCustomDataToNbt(NbtCompound nbt) {
         super.writeCustomDataToNbt(nbt);
-        this.homePosition.ifPresent(globalPos -> nbt.put("HomePosition", GlobalPos.CODEC, globalPos));
         nbt.putInt("ghastling_growth", this.getGhastlingGrowth());
         nbt.putBoolean("in_nether", this.getInNether());
     }
 
     public void readCustomDataFromNbt(NbtCompound nbt) {
         super.readCustomDataFromNbt(nbt);
-        this.homePosition = nbt.get("HomePosition", GlobalPos.CODEC);
         this.setGhastlingGrowth(nbt.getInt("ghastling_growth").orElse(0));
         this.setInNether(nbt.getBoolean("in_nether").orElse(false));
     }
@@ -262,16 +255,9 @@ public class Ghastling extends FlyingEntity implements Leashable, Ownable {
         return null;
     }
 
-    public boolean hasHomePosition() {
-        return this.homePosition.isPresent();
-    }
-
-    public boolean isInHomePositionDimension() {
-        return this.hasHomePosition() && this.getWorld().getRegistryKey() == this.homePosition.get().dimension();
-    }
-
-    public Optional<BlockPos> getHomeBlockPosition() {
-        return this.homePosition.map(GlobalPos::pos);
+    @Override
+    public boolean handleFallDamage(double fallDistance, float damagePerDistance, DamageSource damageSource) {
+        return false;
     }
 
     @Override

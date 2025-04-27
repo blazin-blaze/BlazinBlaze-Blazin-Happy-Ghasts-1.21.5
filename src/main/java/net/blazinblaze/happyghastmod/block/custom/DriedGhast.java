@@ -109,7 +109,7 @@ public class DriedGhast extends FacingBlock implements Waterloggable {
     protected void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
         if(state.get(WATERLOGGED)) {
             float f = 0.1F;
-            if (random.nextFloat() < 0.25F) {
+            if (random.nextFloat() < 0.2F) {
                 world.setBlockState(pos, HappyGhastBlocks.NEUTRAL_DRIED_GHAST.getDefaultState().with(NeutralDriedGhast.WATERLOGGED, true).with(NeutralDriedGhast.FACING, state.get(FACING)));
                 world.playSound(null, pos, HappyGhastSounds.DRIED_GHAST_TRANSITION, SoundCategory.BLOCKS, 1.0F, 1.0F);
                 world.spawnParticles(ParticleTypes.HAPPY_VILLAGER, pos.getX(), pos.getY(), pos.getZ(), 1, 0, 0.2, 0, 0.5);

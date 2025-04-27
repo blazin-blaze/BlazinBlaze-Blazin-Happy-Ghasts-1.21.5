@@ -34,27 +34,24 @@ public abstract class SnowballMixin {
 
     @Inject(method = "use", at = @At(value = "HEAD"), cancellable = true)
     public void useSnowballEntity(World world, PlayerEntity user, Hand hand, CallbackInfoReturnable<ActionResult> cir) {
-        ItemStack itemStack = user.getStackInHand(hand);
-        if(itemStack.getItem() instanceof SnowballItem) {
-            double d = Math.max(0, 10);
-            double e = MathHelper.square(d);
-            Vec3d vec3d = user.getCameraPosVec(1.0F);
-            HitResult result = user.raycast(5.0D, 1.0F, false);
-            double f = result.getPos().squaredDistanceTo(vec3d);
-            if (result.getType() != HitResult.Type.MISS) {
-                e = f;
-                d = Math.sqrt(f);
-            }
-            Vec3d vec3d2 = user.getRotationVec(1.0F);
-            Vec3d vec3d3 = vec3d.add(vec3d2.x * d, vec3d2.y * d, vec3d2.z * d);
-            Box box = user.getBoundingBox().stretch(vec3d2.multiply(d)).expand(1.0, 1.0, 1.0);
-            EntityHitResult entityResult = ProjectileUtil.raycast(user, vec3d, vec3d3, box, EntityPredicates.VALID_ENTITY, e);
+        double d = Math.max(user.getBlockInteractionRange(), user.getEntityInteractionRange()*2);
+        double e = MathHelper.square(d);
+        Vec3d vec3d = user.getCameraPosVec(1.0F);
+        HitResult result = user.raycast(5.0D, 1.0F, false);
+        double f = result.getPos().squaredDistanceTo(vec3d);
+        if (result.getType() != HitResult.Type.MISS) {
+            e = f;
+            d = Math.sqrt(f);
+        }
+        Vec3d vec3d2 = user.getRotationVec(1.0F);
+        Vec3d vec3d3 = vec3d.add(vec3d2.x * d, vec3d2.y * d, vec3d2.z * d);
+        Box box = user.getBoundingBox().stretch(vec3d2.multiply(d)).expand(1.0, 1.0, 1.0);
+        EntityHitResult entityResult = ProjectileUtil.raycast(user, vec3d, vec3d3, box, EntityPredicates.VALID_ENTITY, e);
 
-            if(entityResult != null) {
-                Entity entity = entityResult.getEntity();
-                if(entity instanceof Ghastling ghastling || entity instanceof HappyGhast ghast) {
-                    cir.setReturnValue(ActionResult.SUCCESS);
-                }
+        if(entityResult != null) {
+            Entity entity = entityResult.getEntity();
+            if(entity instanceof Ghastling ghastling || entity instanceof HappyGhast ghast) {
+                cir.setReturnValue(ActionResult.SUCCESS);
             }
         }
     }

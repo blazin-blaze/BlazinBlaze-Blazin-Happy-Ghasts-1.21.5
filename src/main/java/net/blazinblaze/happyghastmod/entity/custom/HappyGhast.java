@@ -20,6 +20,7 @@ import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.control.MoveControl;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.ai.pathing.Path;
 import net.minecraft.entity.attribute.DefaultAttributeContainer;
 import net.minecraft.entity.attribute.EntityAttributeModifier;
 import net.minecraft.entity.attribute.EntityAttributes;
@@ -73,7 +74,7 @@ import org.jetbrains.annotations.Nullable;
 import javax.sound.midi.Track;
 import java.util.*;
 
-public class HappyGhast extends PathAwareEntity implements Ownable, Leashable, RideableInventory {
+public class HappyGhast extends FlyingEntity implements Ownable, Leashable, RideableInventory {
 
     private static final TrackedData<Boolean> SHOOTING;
     private static final TrackedData<Integer> COOLDOWN;
@@ -90,12 +91,15 @@ public class HappyGhast extends PathAwareEntity implements Ownable, Leashable, R
     protected SimpleInventory items;
     private Optional<GlobalPos> homePosition = Optional.empty();
 
-    public HappyGhast(EntityType<? extends PathAwareEntity> entityType, World world) {
+    public HappyGhast(EntityType<? extends FlyingEntity> entityType, World world) {
         super(entityType, world);
         this.experiencePoints = 5;
         this.moveControl = new GhastMoveControl(this);
         this.setupInventory();
         this.dataTracker.set(IS_CONTROLLED, this.isControlledByPlayer());
+        if(homePosition.isEmpty()) {
+            this.updateHomePosition();
+        }
 
         this.items.addListener(new HappyGhastInventoryChanged(this));
     }
@@ -175,7 +179,7 @@ public class HappyGhast extends PathAwareEntity implements Ownable, Leashable, R
     }
 
     public static DefaultAttributeContainer.Builder createGhastAttributes() {
-        return MobEntity.createMobAttributes().add(EntityAttributes.MAX_HEALTH, (double)20.0F).add(EntityAttributes.FOLLOW_RANGE, (double)100.0F).add(EntityAttributes.MOVEMENT_SPEED, 0.7F).add(EntityAttributes.TEMPT_RANGE, 25.0F).add(EntityAttributes.ENTITY_INTERACTION_RANGE, 20.0F);
+        return MobEntity.createMobAttributes().add(EntityAttributes.MAX_HEALTH, (double)20.0F).add(EntityAttributes.FOLLOW_RANGE, (double)100.0F).add(EntityAttributes.MOVEMENT_SPEED, 0.7F).add(EntityAttributes.TEMPT_RANGE, 25.0F);
     }
 
     @Override
@@ -337,10 +341,14 @@ public class HappyGhast extends PathAwareEntity implements Ownable, Leashable, R
                 Vec3d vec3d2 = new Vec3d(f, g, h);
                 ServerWorld world = (ServerWorld) this.getWorld();
                 HappyGhastFireballEntity fireballEntity = new HappyGhastFireballEntity(world, this, vec3d2.normalize(), this.getFireballStrength(), player.getUuidAsString());
+                double xMultiplier = Math.abs(this.getMovement().x)*3;
+                double zMultiplier = Math.abs(this.getMovement().z)*3;
+                if(xMultiplier < 1) {xMultiplier += 1;}
+                if(zMultiplier < 1) {zMultiplier += 1;}
                 if(this.getSpeedUpg()) {
-                    fireballEntity.setPosition(this.getX() + vec3d.x * (double)5.5F, this.getBodyY((double)0.5F) + (double)0.5F, fireballEntity.getZ() + vec3d.z * (double)5.5F);
+                    fireballEntity.setPosition(this.getX() + vec3d.x * (double)4.0F*(xMultiplier), this.getBodyY((double)0.5F) + (double)0.5F, fireballEntity.getZ() + vec3d.z * (double)4.0F*(zMultiplier));
                 }else {
-                    fireballEntity.setPosition(this.getX() + vec3d.x * (double)4.0F, this.getBodyY((double)0.5F) + (double)0.5F, fireballEntity.getZ() + vec3d.z * (double)4.0F);
+                    fireballEntity.setPosition(this.getX() + vec3d.x * (double)4.2F, this.getBodyY((double)0.5F) + (double)0.5F, fireballEntity.getZ() + vec3d.z * (double)4.2F);
                 }
                 world.spawnEntity(fireballEntity);
             }
@@ -494,8 +502,6 @@ public class HappyGhast extends PathAwareEntity implements Ownable, Leashable, R
                     ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
                     int data = serverPlayer.getAttachedOrCreate(HappyGhastAttachments.SNOWBALL_COUNT, HappyGhastAttachments.SNOWBALL_COUNT.initializer());
 
-                    //HappyGhastMod.LOGGER.info(String.valueOf(data));
-
                     if(data >= 1000) {
                         HappyGhastCriteria.THOUSAND_SNOWBALL.trigger(serverPlayer);
                     }
@@ -537,8 +543,6 @@ public class HappyGhast extends PathAwareEntity implements Ownable, Leashable, R
                     serverWorld.spawnParticles(ParticleTypes.ITEM_SNOWBALL, this.getX(), this.getY(), this.getZ(), 1, 0, 0.5, 2.3, 0.5);
                     ServerPlayerEntity serverPlayer = (ServerPlayerEntity) player;
                     int data = serverPlayer.getAttachedOrCreate(HappyGhastAttachments.SNOWBALL_COUNT, HappyGhastAttachments.SNOWBALL_COUNT.initializer());
-
-                    //HappyGhastMod.LOGGER.info(String.valueOf(data));
 
                     if(data >= 1000) {
                         HappyGhastCriteria.THOUSAND_SNOWBALL.trigger(serverPlayer);
@@ -818,9 +822,13 @@ public class HappyGhast extends PathAwareEntity implements Ownable, Leashable, R
             }
 
             if(this.getSpeedUpg() && this.hasControllingPassenger()) {
-                this.updateVelocity(this.isOnGround() ? 0.1F * g : 0.02F * 1.06F, movementInput.multiply(1.06F));
-                this.move(MovementType.SELF, this.getVelocity().multiply(1.06F));
-                this.setVelocity(this.getVelocity().multiply(f).multiply(1.06F));
+                this.updateVelocity(this.isOnGround() ? 0.1F * g : 0.02F * 1.08F, movementInput.multiply(1.08F));
+                this.move(MovementType.SELF, this.getVelocity().multiply(1.08F));
+                this.setVelocity(this.getVelocity().multiply(f).multiply(1.08F));
+            }else if(this.hasControllingPassenger()) {
+                this.updateVelocity(this.isOnGround() ? 0.1F * g : 0.02F * 1.015F, movementInput.multiply(1.015F));
+                this.move(MovementType.SELF, this.getVelocity().multiply(1.015F));
+                this.setVelocity(this.getVelocity().multiply(f).multiply(1.015F));
             }else {
                 this.updateVelocity(this.isOnGround() ? 0.1F * g : 0.02F, movementInput);
                 this.move(MovementType.SELF, this.getVelocity());
