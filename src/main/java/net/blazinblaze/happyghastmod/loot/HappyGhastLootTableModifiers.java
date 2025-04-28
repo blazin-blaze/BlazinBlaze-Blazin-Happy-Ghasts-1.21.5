@@ -28,7 +28,7 @@ public class HappyGhastLootTableModifiers {
                 tableBuilder.pool(poolBuilder.build());
             }
 
-            if(LootTables.ABANDONED_MINESHAFT_CHEST.equals(key)) {
+            if(LootTables.END_CITY_TREASURE_CHEST.equals(key)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
                         .conditionally(RandomChanceLootCondition.builder(0.5f))
