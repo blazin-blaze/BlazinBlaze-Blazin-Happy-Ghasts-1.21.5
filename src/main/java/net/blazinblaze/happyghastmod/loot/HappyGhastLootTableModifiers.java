@@ -51,7 +51,7 @@ public class HappyGhastLootTableModifiers {
             if(LootTables.WOODLAND_MANSION_CHEST.equals(key)) {
                 LootPool.Builder poolBuilder = LootPool.builder()
                         .rolls(ConstantLootNumberProvider.create(1))
-                        .conditionally(RandomChanceLootCondition.builder(0.35f))
+                        .conditionally(RandomChanceLootCondition.builder(0.45f))
                         .with(ItemEntry.builder(HappyGhastItems.HAPPY_GHAST_HEART_UPGRADE))
                         .apply(SetCountLootFunction.builder(ConstantLootNumberProvider.create(1.0f)).build());
 

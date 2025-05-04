@@ -97,9 +97,6 @@ public class HappyGhast extends FlyingEntity implements Ownable, Leashable, Ride
         this.moveControl = new GhastMoveControl(this);
         this.setupInventory();
         this.dataTracker.set(IS_CONTROLLED, this.isControlledByPlayer());
-        if(homePosition.isEmpty()) {
-            this.updateHomePosition();
-        }
 
         this.items.addListener(new HappyGhastInventoryChanged(this));
     }
